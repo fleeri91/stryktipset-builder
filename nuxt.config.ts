@@ -1,17 +1,17 @@
-import tailwindcss from "@tailwindcss/vite";
+import tailwindcss from '@tailwindcss/vite'
 
 // https://nuxt.com/docs/api/configuration/nuxt-config
 export default defineNuxtConfig({
-  compatibilityDate: "2025-07-15",
+  compatibilityDate: '2025-07-15',
   devtools: { enabled: true },
-  modules: ["nuxt-mongoose", "shadcn-nuxt"],
+  modules: ['nuxt-mongoose', 'shadcn-nuxt'],
   mongoose: {
     uri: process.env.MONGODB_URI,
     options: {},
-    modelsDir: "models",
+    modelsDir: 'models',
     devtools: true,
   },
-  css: ["~/assets/css/tailwind.css"],
+  css: ['~/assets/css/tailwind.css'],
   vite: {
     plugins: [tailwindcss()],
   },
@@ -20,13 +20,13 @@ export default defineNuxtConfig({
      * Prefix for all the imported component.
      * @default "Ui"
      */
-    prefix: "",
+    prefix: '',
     /**
      * Directory that the component lives in.
      * Will respect the Nuxt aliases.
      * @link https://nuxt.com/docs/api/nuxt-config#alias
      * @default "@/components/ui"
      */
-    componentDir: "@/components/ui",
+    componentDir: '@/components/ui',
   },
-});
+})
