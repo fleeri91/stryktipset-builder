@@ -11,6 +11,12 @@ export default defineNuxtConfig({
     modelsDir: 'models',
     devtools: true,
   },
+  runtimeConfig: {
+    svenskaSpelSecret: process.env.SVENSKA_SPEL_SECRET,
+    public: {
+      svenskaSpelBaseUrl: process.env.SVENSKA_SPEL_API_URL,
+    },
+  },
   css: ['~/assets/css/tailwind.css'],
   vite: {
     plugins: [tailwindcss()],
