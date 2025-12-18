@@ -4,7 +4,7 @@ import tailwindcss from '@tailwindcss/vite'
 export default defineNuxtConfig({
   compatibilityDate: '2025-07-15',
   devtools: { enabled: true },
-  modules: ['nuxt-mongoose', 'shadcn-nuxt'],
+  modules: ['nuxt-mongoose', 'shadcn-nuxt', 'nuxt-auth-utils'],
   mongoose: {
     uri: process.env.MONGODB_URI,
     options: {},
