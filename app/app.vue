@@ -1,1 +1,4 @@
-<template></template>
+<!-- app.vue -->
+<template>
+  <NuxtPage />
+</template>
