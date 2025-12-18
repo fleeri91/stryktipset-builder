@@ -7,12 +7,21 @@ export const User = defineMongooseModel({
       type: 'string',
       required: true,
       unique: true,
+      lowercase: true,
+      trim: true,
     },
     name: {
       type: 'string',
       required: true,
+      trim: true,
+    },
+    password: {
+      type: 'string',
+      required: true,
+      select: false,
     },
   },
-  options: {},
-  hooks(schema) {},
+  options: {
+    timestamps: true,
+  },
 })
