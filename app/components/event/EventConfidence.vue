@@ -27,13 +27,13 @@ const nextMap: Record<ConfidenceLevel, ConfidenceLevel> = {
 const colorClass = computed(() => {
   switch (props.modelValue) {
     case 'SAFE':
-      return 'bg-green-600/50'
+      return 'bg-green-600/50 dark:bg-green-400/80'
     case 'UNSURE':
-      return 'bg-red-600/50'
+      return 'bg-red-600/50 dark:bg-rose-400/80'
     case 'NEUTRAL':
-      return 'bg-gray-400/50'
+      return 'bg-slate-400/50 dark:bg-slate-500/90'
     default:
-      return 'bg-gray-400/50'
+      return 'bg-slate-400/50'
   }
 })
 
