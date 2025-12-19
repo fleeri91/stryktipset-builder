@@ -31,9 +31,9 @@ const colorClass = computed(() => {
     case 'UNSURE':
       return 'bg-red-600/50 dark:bg-rose-400/80'
     case 'NEUTRAL':
-      return 'bg-slate-400/50 dark:bg-slate-500/90'
+      return 'bg-neutral-400/50 dark:bg-neutral-500/90'
     default:
-      return 'bg-slate-400/50'
+      return 'bg-neutral-400/50'
   }
 })
 
