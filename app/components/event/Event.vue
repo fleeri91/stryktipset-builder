@@ -1,10 +1,12 @@
 <script setup lang="ts">
 import { ref } from 'vue'
+
 import EventRow from '@/components/event/EventRow.vue'
+
 import type { Event } from '~~/server/types/SvenskaSpel/Event'
 
-type Outcome = '1' | 'X' | '2'
-type ConfidenceLevel = 'UNSURE' | 'NEUTRAL' | 'SAFE'
+export type Outcome = '1' | 'X' | '2'
+export type ConfidenceLevel = 'UNSURE' | 'NEUTRAL' | 'SAFE'
 
 const props = defineProps<{
   event: Event

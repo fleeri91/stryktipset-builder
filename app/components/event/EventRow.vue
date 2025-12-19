@@ -1,13 +1,13 @@
 <script setup lang="ts">
+import { computed } from 'vue'
+import type { AcceptableValue } from 'reka-ui'
+
 import { ToggleGroup, ToggleGroupItem } from '@/components/ui/toggle-group'
 import { Badge } from '@/components/ui/badge'
 import { EventConfidence } from '@/components/event'
-import type { AcceptableValue } from 'reka-ui'
-import { computed } from 'vue'
-import type { Event } from '~~/server/types/SvenskaSpel/Event'
 
-type Outcome = '1' | 'X' | '2'
-type ConfidenceLevel = 'UNSURE' | 'NEUTRAL' | 'SAFE'
+import type { Outcome, ConfidenceLevel } from '@/components/event'
+import type { Event } from '~~/server/types/SvenskaSpel/Event'
 
 const props = withDefaults(
   defineProps<{
@@ -32,7 +32,6 @@ const away = computed(
   () => props.event.participants.find((p) => p.type === 'away')?.name
 )
 
-// normalize payload from ToggleGroup and emit typed Outcome[]
 function onUpdate(payload: AcceptableValue | AcceptableValue[]) {
   const values = Array.isArray(payload)
     ? payload
@@ -43,7 +42,6 @@ function onUpdate(payload: AcceptableValue | AcceptableValue[]) {
   emit('update:modelValue', values as Outcome[])
 }
 
-// Handle confidence update
 function onConfidenceUpdate(value: ConfidenceLevel) {
   console.log(
     'EventRow: Updating confidence from',
@@ -57,7 +55,6 @@ function onConfidenceUpdate(value: ConfidenceLevel) {
 
 <template>
   <div class="flex flex-col gap-2 border-b py-3">
-    <!-- Matchrad -->
     <div class="flex items-center gap-4">
       <div class="flex w-full items-center gap-2 text-sm font-bold">
         <Badge class="h-8 w-8 font-extrabold">
@@ -73,9 +70,9 @@ function onConfidenceUpdate(value: ConfidenceLevel) {
         @update:model-value="onUpdate"
         class="flex"
       >
-        <ToggleGroupItem value="1">1</ToggleGroupItem>
-        <ToggleGroupItem value="X">X</ToggleGroupItem>
-        <ToggleGroupItem value="2">2</ToggleGroupItem>
+        <ToggleGroupItem value="1" aria-label="Hemmavinst">1</ToggleGroupItem>
+        <ToggleGroupItem value="X" aria-label="Oavgjort">X</ToggleGroupItem>
+        <ToggleGroupItem value="2" aria-label="Bortavinst">2</ToggleGroupItem>
       </ToggleGroup>
       <EventConfidence
         :model-value="confidence"

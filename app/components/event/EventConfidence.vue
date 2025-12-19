@@ -1,8 +1,9 @@
 <script setup lang="ts">
 import { computed } from 'vue'
+
 import { Badge } from '@/components/ui/badge'
 
-type ConfidenceLevel = 'UNSURE' | 'NEUTRAL' | 'SAFE'
+import type { ConfidenceLevel } from '@/components/event'
 
 const props = withDefaults(
   defineProps<{
@@ -26,13 +27,13 @@ const nextMap: Record<ConfidenceLevel, ConfidenceLevel> = {
 const colorClass = computed(() => {
   switch (props.modelValue) {
     case 'SAFE':
-      return 'bg-green-600'
+      return 'bg-green-600/50'
     case 'UNSURE':
-      return 'bg-red-600'
+      return 'bg-red-600/50'
     case 'NEUTRAL':
-      return 'bg-gray-400'
+      return 'bg-gray-400/50'
     default:
-      return 'bg-gray-400'
+      return 'bg-gray-400/50'
   }
 })
 
