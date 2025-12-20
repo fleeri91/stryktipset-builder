@@ -29,7 +29,7 @@ function handleConfidenceUpdate(eventNumber: number, value: ConfidenceLevel) {
   <div class="mt-24 flex justify-center">
     <div v-if="pending">Loading events...</div>
     <div v-else-if="error">Error loading events: {{ error.message }}</div>
-    <div class="w-full max-w-2xl" v-else>
+    <div class="bg-card w-full max-w-2xl rounded-2xl p-8" v-else>
       <div class="mb-8 flex justify-center">
         <h1 class="text-2xl font-bold">
           <span>Stryktipset </span>
