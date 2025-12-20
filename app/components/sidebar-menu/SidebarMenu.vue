@@ -28,14 +28,14 @@ const actionItems = [
 </script>
 
 <template>
-  <Sidebar>
+  <Sidebar collapsible="icon">
     <SidebarContent>
       <SidebarGroup>
         <SidebarGroupContent>
           <SidebarMenu>
             <SidebarMenuItem v-for="item in menuItems" :key="item.title">
               <SidebarMenuButton as-child>
-                <a :href="item.url">
+                <a :href="item.url" :title="item.title">
                   <component :is="item.icon" />
                   <span>{{ item.title }}</span>
                 </a>
@@ -49,7 +49,7 @@ const actionItems = [
           <SidebarMenu>
             <SidebarMenuItem v-for="item in actionItems" :key="item.title">
               <SidebarMenuButton as-child>
-                <a :href="item.url">
+                <a :href="item.url" :title="item.title">
                   <component :is="item.icon" />
                   <span>{{ item.title }}</span>
                 </a>
