@@ -2,7 +2,6 @@
 import { toTypedSchema } from '@vee-validate/zod'
 import { useForm } from 'vee-validate'
 import * as z from 'zod'
-import { Button } from '@/components/ui/button'
 import {
   Card,
   CardContent,
@@ -23,16 +22,39 @@ import { Input } from '@/components/ui/input'
 import { Alert, AlertDescription } from '@/components/ui/alert'
 import { Loader2 } from 'lucide-vue-next'
 
+const { loggedIn } = useUserSession()
+
+// Omdirigera om redan inloggad
+watchEffect(() => {
+  if (loggedIn.value) {
+    navigateTo('/')
+  }
+})
+
 const formSchema = toTypedSchema(
   z
     .object({
-      name: z.string().min(2, 'Name must be at least 2 characters'),
-      email: z.string().email('Please enter a valid email'),
-      password: z.string().min(8, 'Password must be at least 8 characters'),
-      confirmPassword: z.string(),
+      name: z
+        .string({
+          required_error: 'Namn är obligatoriskt',
+        })
+        .min(2, 'Namnet måste innehålla minst 2 tecken'),
+      email: z
+        .string({
+          required_error: 'E-postadress är obligatorisk',
+        })
+        .email('Vänligen ange en giltig e-postadress'),
+      password: z
+        .string({
+          required_error: 'Lösenord är obligatoriskt',
+        })
+        .min(8, 'Lösenordet måste innehålla minst 8 tecken'),
+      confirmPassword: z.string({
+        required_error: 'Bekräfta lösenord är obligatoriskt',
+      }),
     })
     .refine((data) => data.password === data.confirmPassword, {
-      message: "Passwords don't match",
+      message: 'Lösenorden matchar inte',
       path: ['confirmPassword'],
     })
 )
@@ -49,7 +71,7 @@ const onSubmit = form.handleSubmit(async (values) => {
   isLoading.value = true
 
   try {
-    const response = await $fetch('/api/auth/register', {
+    await $fetch('/api/auth/register', {
       method: 'POST',
       body: {
         name: values.name,
@@ -58,12 +80,12 @@ const onSubmit = form.handleSubmit(async (values) => {
       },
     })
 
-    if (response.success) {
-      await navigateTo('/')
-    }
+    // Reload the entire Nuxt app with the new session
+    reloadNuxtApp({ path: '/' })
   } catch (err: any) {
     error.value =
-      err.data?.statusMessage || 'Registration failed. Please try again.'
+      err.data?.statusMessage ||
+      'Registreringen misslyckades. Vänligen försök igen.'
   } finally {
     isLoading.value = false
   }
@@ -71,16 +93,14 @@ const onSubmit = form.handleSubmit(async (values) => {
 </script>
 
 <template>
-  <div
-    class="flex min-h-screen items-center justify-center bg-gray-50 px-4 py-12"
-  >
+  <div class="flex min-h-screen items-center justify-center px-4 py-12">
     <Card class="w-full max-w-md">
       <CardHeader class="space-y-1">
         <CardTitle class="text-center text-2xl font-bold">
-          Create an account
+          Skapa konto
         </CardTitle>
         <CardDescription class="text-center">
-          Enter your information to create your account
+          Fyll i dina uppgifter för att komma igång
         </CardDescription>
       </CardHeader>
 
@@ -92,11 +112,11 @@ const onSubmit = form.handleSubmit(async (values) => {
 
           <FormField v-slot="{ componentField }" name="name">
             <FormItem>
-              <FormLabel>Name</FormLabel>
+              <FormLabel>Namn</FormLabel>
               <FormControl>
                 <Input
                   type="text"
-                  placeholder="John Doe"
+                  placeholder="Namn"
                   v-bind="componentField"
                   :disabled="isLoading"
                 />
@@ -107,11 +127,11 @@ const onSubmit = form.handleSubmit(async (values) => {
 
           <FormField v-slot="{ componentField }" name="email">
             <FormItem>
-              <FormLabel>Email</FormLabel>
+              <FormLabel>E-postadress</FormLabel>
               <FormControl>
                 <Input
                   type="email"
-                  placeholder="john@example.com"
+                  placeholder="email@exempel.se"
                   v-bind="componentField"
                   :disabled="isLoading"
                   autocomplete="email"
@@ -123,7 +143,7 @@ const onSubmit = form.handleSubmit(async (values) => {
 
           <FormField v-slot="{ componentField }" name="password">
             <FormItem>
-              <FormLabel>Password</FormLabel>
+              <FormLabel>Lösenord</FormLabel>
               <FormControl>
                 <Input
                   type="password"
@@ -134,7 +154,7 @@ const onSubmit = form.handleSubmit(async (values) => {
                 />
               </FormControl>
               <FormDescription>
-                Must be at least 8 characters long
+                Lösenordet måste innehålla minst 8 tecken
               </FormDescription>
               <FormMessage />
             </FormItem>
@@ -142,7 +162,7 @@ const onSubmit = form.handleSubmit(async (values) => {
 
           <FormField v-slot="{ componentField }" name="confirmPassword">
             <FormItem>
-              <FormLabel>Confirm Password</FormLabel>
+              <FormLabel>Bekräfta lösenord</FormLabel>
               <FormControl>
                 <Input
                   type="password"
@@ -159,22 +179,26 @@ const onSubmit = form.handleSubmit(async (values) => {
           <button
             type="submit"
             :disabled="isLoading"
-            class="bg-primary text-primary-foreground ring-offset-background hover:bg-primary/90 focus-visible:ring-ring inline-flex w-full items-center justify-center rounded-md px-4 py-2 text-sm font-medium transition-colors focus-visible:ring-2 focus-visible:ring-offset-2 focus-visible:outline-none disabled:pointer-events-none disabled:opacity-50"
+            class="bg-primary text-primary-foreground ring-offset-background hover:bg-primary/90 focus-visible:ring-ring inline-flex w-full cursor-pointer items-center justify-center rounded-md px-4 py-2 text-sm font-medium transition-colors focus-visible:ring-2 focus-visible:ring-offset-2 focus-visible:outline-none disabled:pointer-events-none disabled:opacity-50"
           >
-            <Loader2 v-if="isLoading" class="mr-2 h-4 w-4 animate-spin" />
-            {{ isLoading ? 'Creating account...' : 'Create account' }}
+            <Loader2
+              v-if="isLoading"
+              aria-hidden="true"
+              class="mr-2 h-4 w-4 animate-spin"
+            />
+            {{ isLoading ? 'Skapar konto...' : 'Skapa konto' }}
           </button>
         </form>
       </CardContent>
 
       <CardFooter class="flex justify-center">
         <p class="text-sm text-gray-600">
-          Already have an account?
+          Har du redan ett konto?
           <NuxtLink
             to="/login"
-            class="font-medium text-blue-600 hover:underline"
+            class="font-medium text-blue-500 underline hover:no-underline"
           >
-            Sign in
+            Logga in
           </NuxtLink>
         </p>
       </CardFooter>
