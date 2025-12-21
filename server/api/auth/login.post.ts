@@ -19,7 +19,7 @@ export default defineEventHandler(async (event) => {
     if (!user) {
       throw createError({
         statusCode: 401,
-        statusMessage: 'Invalid credentials',
+        statusMessage: 'Ogiltiga inloggningsuppgifter',
       })
     }
 
@@ -28,7 +28,7 @@ export default defineEventHandler(async (event) => {
     if (!isValidPassword) {
       throw createError({
         statusCode: 401,
-        statusMessage: 'Invalid credentials',
+        statusMessage: 'Ogiltiga inloggningsuppgifter',
       })
     }
 
@@ -42,8 +42,6 @@ export default defineEventHandler(async (event) => {
     })
 
     return {
-      success: true,
-      message: 'User logged in successfully',
       user: {
         id: user._id.toString(),
         email: user.email,
@@ -58,7 +56,7 @@ export default defineEventHandler(async (event) => {
     console.error('Login error:', err)
     throw createError({
       statusCode: 500,
-      statusMessage: 'Internal Server Error',
+      statusMessage: 'Ett fel uppstod vid inloggning',
     })
   }
 })
