@@ -10,19 +10,41 @@ import {
   SidebarMenuItem,
 } from '@/components/ui/sidebar'
 
-// Menu items.
+const { clear } = useUserSession()
+
+// Menu items
 const menuItems = [
   {
     title: 'Hem',
-    url: '#',
+    url: '/',
     icon: Home,
   },
 ]
+
+const isLoggingOut = ref(false)
+
+const handleLogout = async () => {
+  if (isLoggingOut.value) return
+
+  isLoggingOut.value = true
+
+  try {
+    // Clear the session (this removes the cookie and clears server-side session)
+    await clear()
+
+    // Redirect to register page with full reload
+    await navigateTo('/register', { external: true })
+  } catch (error) {
+    console.error('Logout error:', error)
+    isLoggingOut.value = false
+  }
+}
+
 const actionItems = [
   {
     title: 'Logga ut',
-    url: '#',
     icon: LogOut,
+    action: handleLogout,
   },
 ]
 </script>
@@ -35,10 +57,10 @@ const actionItems = [
           <SidebarMenu>
             <SidebarMenuItem v-for="item in menuItems" :key="item.title">
               <SidebarMenuButton as-child class="h-auto flex-col gap-1 py-3">
-                <a :href="item.url" :title="item.title">
+                <NuxtLink :to="item.url" :title="item.title">
                   <component :is="item.icon" class="size-5!" />
                   <span class="text-xs">{{ item.title }}</span>
-                </a>
+                </NuxtLink>
               </SidebarMenuButton>
             </SidebarMenuItem>
           </SidebarMenu>
@@ -49,10 +71,17 @@ const actionItems = [
           <SidebarMenu>
             <SidebarMenuItem v-for="item in actionItems" :key="item.title">
               <SidebarMenuButton as-child class="h-auto flex-col gap-1 py-3">
-                <a :href="item.url" :title="item.title">
+                <button
+                  @click="item.action"
+                  :title="item.title"
+                  :disabled="isLoggingOut"
+                  class="disabled:opacity-50"
+                >
                   <component :is="item.icon" class="size-5!" />
-                  <span class="text-xs">{{ item.title }}</span>
-                </a>
+                  <span class="text-xs">
+                    {{ isLoggingOut ? 'Loggar ut...' : item.title }}
+                  </span>
+                </button>
               </SidebarMenuButton>
             </SidebarMenuItem>
           </SidebarMenu>
