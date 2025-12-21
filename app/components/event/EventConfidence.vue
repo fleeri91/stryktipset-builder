@@ -47,7 +47,7 @@ function toggle() {
 <template>
   <Badge
     type="button"
-    class="h-6 w-6 rounded-full transition-all hover:scale-[1.1]"
+    class="h-6 w-6 cursor-pointer rounded-full transition-all hover:scale-[1.1]"
     :class="colorClass"
     @click="toggle"
   />

@@ -70,9 +70,21 @@ function onConfidenceUpdate(value: ConfidenceLevel) {
         @update:model-value="onUpdate"
         class="flex"
       >
-        <ToggleGroupItem value="1" aria-label="Hemmavinst">1</ToggleGroupItem>
-        <ToggleGroupItem value="X" aria-label="Oavgjort">X</ToggleGroupItem>
-        <ToggleGroupItem value="2" aria-label="Bortavinst">2</ToggleGroupItem>
+        <ToggleGroupItem
+          value="1"
+          aria-label="Hemmavinst"
+          class="cursor-pointer"
+          >1</ToggleGroupItem
+        >
+        <ToggleGroupItem value="X" aria-label="Oavgjort" class="cursor-pointer"
+          >X</ToggleGroupItem
+        >
+        <ToggleGroupItem
+          value="2"
+          aria-label="Bortavinst"
+          class="cursor-pointer"
+          >2</ToggleGroupItem
+        >
       </ToggleGroup>
       <EventConfidence
         :model-value="confidence"
