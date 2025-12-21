@@ -45,9 +45,8 @@ function toggle() {
 </script>
 
 <template>
-  <Badge
-    type="button"
-    class="h-6 w-6 rounded-full transition-all hover:scale-[1.1]"
+  <button
+    class="min-h-6 min-w-6 transform-gpu rounded-full transition-transform duration-200 ease-out hover:scale-115"
     :class="colorClass"
     @click="toggle"
   />
