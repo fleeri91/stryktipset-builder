@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import { Home, LogOut } from 'lucide-vue-next'
+import { Home, LogOut, Medal, Settings, Users } from 'lucide-vue-next'
 import {
   Sidebar,
   SidebarContent,
@@ -12,12 +12,21 @@ import {
 
 const { clear } = useUserSession()
 
-// Menu items
 const menuItems = [
   {
     title: 'Hem',
     url: '/',
     icon: Home,
+  },
+  {
+    title: 'Lag',
+    url: '/team',
+    icon: Users,
+  },
+  {
+    title: 'Resultat',
+    url: '/result',
+    icon: Medal,
   },
 ]
 
@@ -29,10 +38,7 @@ const handleLogout = async () => {
   isLoggingOut.value = true
 
   try {
-    // Clear the session (this removes the cookie and clears server-side session)
     await clear()
-
-    // Redirect to register page with full reload
     await navigateTo('/register', { external: true })
   } catch (error) {
     console.error('Logout error:', error)
