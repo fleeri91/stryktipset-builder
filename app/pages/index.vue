@@ -1,4 +1,8 @@
 <script setup lang="ts">
+definePageMeta({
+  middleware: 'auth',
+})
+
 import { reactive, computed } from 'vue'
 
 import { Event, EventEmpty } from '@/components/event'
