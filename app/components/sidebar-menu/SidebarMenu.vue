@@ -28,16 +28,16 @@ const actionItems = [
 </script>
 
 <template>
-  <Sidebar collapsible="icon">
-    <SidebarContent>
+  <Sidebar collapsible="none" class="h-screen w-24">
+    <SidebarContent class="gap-2">
       <SidebarGroup>
         <SidebarGroupContent>
           <SidebarMenu>
             <SidebarMenuItem v-for="item in menuItems" :key="item.title">
-              <SidebarMenuButton as-child>
+              <SidebarMenuButton as-child class="h-auto flex-col gap-1 py-3">
                 <a :href="item.url" :title="item.title">
-                  <component :is="item.icon" />
-                  <span>{{ item.title }}</span>
+                  <component :is="item.icon" class="size-5!" />
+                  <span class="text-xs">{{ item.title }}</span>
                 </a>
               </SidebarMenuButton>
             </SidebarMenuItem>
@@ -48,10 +48,10 @@ const actionItems = [
         <SidebarGroupContent>
           <SidebarMenu>
             <SidebarMenuItem v-for="item in actionItems" :key="item.title">
-              <SidebarMenuButton as-child>
+              <SidebarMenuButton as-child class="h-auto flex-col gap-1 py-3">
                 <a :href="item.url" :title="item.title">
-                  <component :is="item.icon" />
-                  <span>{{ item.title }}</span>
+                  <component :is="item.icon" class="size-5!" />
+                  <span class="text-xs">{{ item.title }}</span>
                 </a>
               </SidebarMenuButton>
             </SidebarMenuItem>
