@@ -43,12 +43,6 @@ function onUpdate(payload: AcceptableValue | AcceptableValue[]) {
 }
 
 function onConfidenceUpdate(value: ConfidenceLevel) {
-  console.log(
-    'EventRow: Updating confidence from',
-    props.confidence,
-    'to',
-    value
-  )
   emit('update:confidence', value)
 }
 </script>
