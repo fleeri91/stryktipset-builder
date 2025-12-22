@@ -7,19 +7,15 @@ const { loggedIn, user } = useUserSession()
 
 <!-- app.vue -->
 <template>
-  <NuxtLayout>
-    <SidebarProvider>
-      <NuxtLoadingIndicator />
-      <template v-if="loggedIn && user">
-        <SidebarMenu />
-      </template>
-      <SidebarInset>
-        <main class="flex flex-1 flex-col">
-          <div class="@container/main flex flex-1 flex-col gap-2">
-            <NuxtPage />
-          </div>
-        </main>
-      </SidebarInset>
-    </SidebarProvider>
-  </NuxtLayout>
+  <SidebarProvider>
+    <NuxtLoadingIndicator />
+    <template v-if="loggedIn && user">
+      <SidebarMenu />
+    </template>
+    <SidebarInset>
+      <NuxtLayout>
+        <NuxtPage />
+      </NuxtLayout>
+    </SidebarInset>
+  </SidebarProvider>
 </template>
