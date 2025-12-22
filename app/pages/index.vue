@@ -1,6 +1,6 @@
 <script setup lang="ts">
-import type { EventRoot } from '~~/server/types/SvenskaSpel/Event'
-import { EventType } from '~~/server/types/SvenskaSpel/EventType'
+import type { EventRoot } from '~~/shared/types/SvenskaSpel/Event'
+import { EventType } from '~~/shared/types/SvenskaSpel/EventType'
 import EventList from '~/components/event-list/EventList.vue'
 
 definePageMeta({

@@ -10,7 +10,7 @@ import { Event, EventEmpty } from '@/components/event'
 import { Button } from '@/components/ui/button'
 
 import type { Outcome, ConfidenceLevel } from '@/components/event'
-import type { Draw } from '~~/server/types/SvenskaSpel/Event'
+import type { Draw } from '~~/shared/types/SvenskaSpel/Event'
 import type { BongRoot } from '~~/server/types/Bong'
 
 const route = useRoute()

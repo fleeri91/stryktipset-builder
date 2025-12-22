@@ -1,5 +1,5 @@
-import { EventRoot } from '~~/server/types/SvenskaSpel/Event'
-import { EventType } from '~~/server/types/SvenskaSpel/EventType'
+import { EventRoot } from '~~/shared/types/SvenskaSpel/Event'
+import { EventType } from '~~/shared/types/SvenskaSpel/EventType'
 
 export default defineEventHandler(async (event): Promise<EventRoot> => {
   const config = useRuntimeConfig()

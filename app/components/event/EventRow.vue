@@ -7,7 +7,7 @@ import { Badge } from '@/components/ui/badge'
 import { EventConfidence } from '@/components/event'
 
 import type { Outcome, ConfidenceLevel } from '@/components/event'
-import type { Event } from '~~/server/types/SvenskaSpel/Event'
+import type { Event } from '~~/shared/types/SvenskaSpel/Event'
 
 const props = withDefaults(
   defineProps<{

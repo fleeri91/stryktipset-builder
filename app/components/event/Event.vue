@@ -3,7 +3,7 @@ import { ref, watch } from 'vue'
 
 import EventRow from '@/components/event/EventRow.vue'
 
-import type { Event } from '~~/server/types/SvenskaSpel/Event'
+import type { Event } from '~~/shared/types/SvenskaSpel/Event'
 
 export type Outcome = '1' | 'X' | '2'
 export type ConfidenceLevel = 'UNSURE' | 'NEUTRAL' | 'SAFE'

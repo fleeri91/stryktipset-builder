@@ -1,5 +1,5 @@
-import { EventType } from '~~/server/types/SvenskaSpel/EventType'
-import type { EventRoot, Draw } from '~~/server/types/SvenskaSpel/Event'
+import { EventType } from '~~/shared/types/SvenskaSpel/EventType'
+import type { EventRoot, Draw } from '~~/shared/types/SvenskaSpel/Event'
 
 export default defineEventHandler(async (event) => {
   const config = useRuntimeConfig()
