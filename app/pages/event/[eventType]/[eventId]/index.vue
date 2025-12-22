@@ -11,7 +11,7 @@ import { Button } from '@/components/ui/button'
 
 import type { Outcome, ConfidenceLevel } from '@/components/event'
 import type { Draw } from '~~/shared/types/SvenskaSpel/Event'
-import type { BongRoot } from '~~/server/types/Bong'
+import type { BongRoot } from '~~/shared/types/Bong'
 
 const route = useRoute()
 const drawNumber = route.params.eventId as string
