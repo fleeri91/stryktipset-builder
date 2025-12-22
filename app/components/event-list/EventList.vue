@@ -1,6 +1,6 @@
 <script setup lang="ts">
 import type { EventRoot } from '~~/server/types/SvenskaSpel/Event'
-import Card from '../ui/card/Card.vue'
+import { Card } from '@/components/ui/card'
 
 defineProps<{
   event: EventRoot
