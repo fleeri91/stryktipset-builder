@@ -39,7 +39,6 @@ const colorClass = computed(() => {
 
 function toggle() {
   const nextValue = nextMap[props.modelValue]
-  console.log('Toggling from:', props.modelValue, 'to:', nextValue)
   emit('update:modelValue', nextValue)
 }
 </script>
