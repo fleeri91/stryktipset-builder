@@ -64,9 +64,12 @@ watch(
         (key) => delete confidenceLevels[Number(key)]
       )
 
-      // Populate with saved predictions
       bong.predictions.forEach((pred) => {
-        selections[pred.eventNumber] = [pred.outcome as Outcome]
+        // Ensure pred.outcome is always a flat array
+        selections[pred.eventNumber] = Array.isArray(pred.outcome)
+          ? (pred.outcome as Outcome[])
+          : [pred.outcome as Outcome]
+
         confidenceLevels[pred.eventNumber] = pred.confidence as ConfidenceLevel
       })
     }
@@ -111,7 +114,7 @@ async function submitBong() {
     const predictions = events.value.map((event) => {
       const eventSelections = selections[event.eventNumber] || []
       const confidence = confidenceLevels[event.eventNumber] || 'NEUTRAL'
-      const outcome = eventSelections[0] as Outcome
+      const outcome = eventSelections as Outcome[]
 
       return {
         eventNumber: event.eventNumber,
@@ -212,20 +215,6 @@ async function submitBong() {
           />
         </h1>
       </div>
-
-      <!-- Editing indicator -->
-      <div
-        v-if="isEditing"
-        class="text-muted-foreground mb-4 text-center text-sm"
-      >
-        Redigerar befintlig bong (ID: {{ existingBongId }})
-      </div>
-
-      <!-- Progress indicator -->
-      <div class="text-muted-foreground mb-4 text-center text-sm">
-        {{ selectedCount }} / {{ events.length }} matcher valda
-      </div>
-
       <Event
         v-for="event in events"
         :key="event.eventNumber"

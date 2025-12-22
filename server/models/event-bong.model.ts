@@ -29,7 +29,7 @@ export const EventBong = defineMongooseModel({
             required: true,
           },
           outcome: {
-            type: String,
+            type: [String],
             enum: ['1', 'X', '2'],
             required: true,
           },

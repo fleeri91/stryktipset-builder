@@ -39,28 +39,27 @@ export default defineEventHandler(async (event) => {
       })
     }
 
-    for (const pred of body.predictions) {
-      if (
-        !pred.eventNumber ||
-        !pred.outcome ||
-        !pred.confidence ||
-        !pred.description ||
-        !pred.sportEventId
-      ) {
-        throw createError({
-          statusCode: 400,
-          statusMessage:
-            'Each prediction must have eventNumber, outcome, confidence, description, and sportEventId',
-        })
-      }
+    const validOutcomes = ['1', 'X', '2']
 
-      if (!['1', 'X', '2'].includes(pred.outcome)) {
+    for (const pred of body.predictions) {
+      // Check outcome: can be string or array of strings
+      if (Array.isArray(pred.outcome)) {
+        for (const o of pred.outcome) {
+          if (!validOutcomes.includes(o)) {
+            throw createError({
+              statusCode: 400,
+              statusMessage: `Invalid outcome: ${o}. Must be '1', 'X', or '2'`,
+            })
+          }
+        }
+      } else if (!validOutcomes.includes(pred.outcome)) {
         throw createError({
           statusCode: 400,
           statusMessage: `Invalid outcome: ${pred.outcome}. Must be '1', 'X', or '2'`,
         })
       }
 
+      // Confidence check remains the same
       if (!['UNSURE', 'NEUTRAL', 'SAFE'].includes(pred.confidence)) {
         throw createError({
           statusCode: 400,
