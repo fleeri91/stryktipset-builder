@@ -56,7 +56,7 @@ const actionItems = [
 </script>
 
 <template>
-  <Sidebar collapsible="none" class="h-screen w-24">
+  <Sidebar collapsible="none" class="sticky top-0 h-screen w-24">
     <SidebarContent class="gap-2">
       <SidebarGroup>
         <SidebarGroupContent>
