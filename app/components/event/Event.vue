@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import { ref } from 'vue'
+import { ref, watch } from 'vue'
 
 import EventRow from '@/components/event/EventRow.vue'
 
@@ -10,6 +10,8 @@ export type ConfidenceLevel = 'UNSURE' | 'NEUTRAL' | 'SAFE'
 
 const props = defineProps<{
   event: Event
+  initialSelections?: Outcome[]
+  initialConfidence?: ConfidenceLevel
 }>()
 
 const emit = defineEmits<{
@@ -17,8 +19,28 @@ const emit = defineEmits<{
   (e: 'update:confidence', eventNumber: number, value: ConfidenceLevel): void
 }>()
 
-const selections = ref<Outcome[]>([])
-const confidence = ref<ConfidenceLevel>('NEUTRAL')
+// Initialize with props or defaults
+const selections = ref<Outcome[]>(props.initialSelections || [])
+const confidence = ref<ConfidenceLevel>(props.initialConfidence || 'NEUTRAL')
+
+// Watch for changes to initial values (when bong data loads)
+watch(
+  () => props.initialSelections,
+  (newVal) => {
+    if (newVal && newVal.length > 0) {
+      selections.value = newVal
+    }
+  }
+)
+
+watch(
+  () => props.initialConfidence,
+  (newVal) => {
+    if (newVal) {
+      confidence.value = newVal
+    }
+  }
+)
 
 function updateSelections(value: Outcome[]) {
   selections.value = value
