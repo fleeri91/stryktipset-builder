@@ -28,6 +28,11 @@ const menuItems = [
     url: '/result',
     icon: Medal,
   },
+  {
+    title: 'Profil',
+    url: '/profile',
+    icon: Settings,
+  },
 ]
 
 const isLoggingOut = ref(false)
