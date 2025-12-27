@@ -30,7 +30,7 @@ const { data, pending, error } = await useAsyncData('events', async () => {
   <div v-else-if="error">Something went wrong</div>
 
   <div v-else>
-    <div class="grid grid-cols-2 space-x-4">
+    <div class="grid-cols-auto grid space-x-4">
       <EventList v-if="data" :event="data.stryktipset" title="Stryktipset" />
       <EventList v-if="data" :event="data.europatipset" title="Europatipset" />
     </div>
