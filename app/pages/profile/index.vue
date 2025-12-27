@@ -17,10 +17,8 @@ definePageMeta({
   middleware: 'auth',
 })
 
-/* ---------------- USER SESSION ---------------- */
 const { user } = useUserSession()
 
-/* ---------------- STATE ---------------- */
 const state = reactive({
   name: user.value?.name ?? '',
 })
@@ -36,7 +34,6 @@ watch(
 
 const isUpdatingName = ref(false)
 
-/* ---------------- HANDLER ---------------- */
 async function onUpdateName() {
   if (!state.name || state.name.length < 2) {
     toast.error('Name must be at least 2 characters')
@@ -61,19 +58,13 @@ async function onUpdateName() {
 </script>
 
 <template>
-  <div class="container mx-auto max-w-2xl space-y-6 py-10">
-    <div>
-      <h1 class="text-3xl font-bold">Profilinställningar</h1>
-      <p class="text-muted-foreground mt-2">Hantera dina kontoinställningar</p>
+  <div class="mx-auto max-w-2xl">
+    <div class="mt-12 flex items-center justify-between">
+      <h1 class="text-3xl font-bold">Profil</h1>
     </div>
-
-    <Separator />
-
-    <!-- UPDATE NAME -->
     <Form @submit="onUpdateName" class="space-y-4">
       <h2 class="text-xl font-semibold">Namn</h2>
-
-      <FormField name="name" v-slot="{ field }">
+      <FormField name="name">
         <FormItem>
           <FormLabel>Namn</FormLabel>
           <FormControl>
@@ -82,7 +73,6 @@ async function onUpdateName() {
           <FormMessage />
         </FormItem>
       </FormField>
-
       <Button type="submit" :disabled="isUpdatingName">
         {{ isUpdatingName ? 'Uppdaterar...' : 'Uppdatera namn' }}
       </Button>
