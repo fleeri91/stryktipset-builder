@@ -92,12 +92,6 @@ const isValidBong = computed(() => {
   })
 })
 
-const selectedCount = computed(() => {
-  return Object.values(selections).filter(
-    (value): value is Outcome[] => Array.isArray(value) && value.length > 0
-  ).length
-})
-
 const isEditing = computed(() => !!existingBongId.value)
 
 async function submitBong() {
