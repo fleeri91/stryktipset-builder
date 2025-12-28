@@ -1,7 +1,7 @@
 <script setup lang="ts">
 import { ref, watch } from 'vue'
 
-import EventRow from '@/components/event/EventRow.vue'
+import EventRow from './EventRow.vue'
 
 import type { Event } from '~~/shared/types/SvenskaSpel/Event'
 

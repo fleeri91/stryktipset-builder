@@ -1,9 +1,7 @@
 <script setup lang="ts">
 import { computed } from 'vue'
 
-import { Badge } from '@/components/ui/badge'
-
-import type { ConfidenceLevel } from '@/components/event'
+import type { ConfidenceLevel } from '.'
 
 const props = withDefaults(
   defineProps<{

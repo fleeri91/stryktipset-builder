@@ -4,9 +4,9 @@ import type { AcceptableValue } from 'reka-ui'
 
 import { ToggleGroup, ToggleGroupItem } from '@/components/ui/toggle-group'
 import { Badge } from '@/components/ui/badge'
-import { EventConfidence } from '@/components/event'
+import { EventConfidence } from '.'
 
-import type { Outcome, ConfidenceLevel } from '@/components/event'
+import type { Outcome, ConfidenceLevel } from '.'
 import type { Event } from '~~/shared/types/SvenskaSpel/Event'
 
 const props = withDefaults(
