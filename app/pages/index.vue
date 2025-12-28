@@ -3,13 +3,29 @@ import type { EventRoot } from '~~/shared/types/SvenskaSpel/Event'
 import { EventType } from '~~/shared/types/SvenskaSpel/EventType'
 import EventList from '~/components/event-list/EventList.vue'
 import { EmptyState } from '~/components/empty-state'
+import { Button } from '@/components/ui/button'
+import {
+  Card,
+  CardContent,
+  CardDescription,
+  CardHeader,
+  CardTitle,
+} from '@/components/ui/card'
 
 definePageMeta({
   middleware: 'auth',
   layout: 'centered',
 })
 
+// Check if user has teams
+const { data: teams } = await useFetch('/api/user/teams')
+
 const { data, pending, error } = await useAsyncData('events', async () => {
+  // Only fetch events if user has teams
+  if (!teams.value?.hasTeams) {
+    return null
+  }
+
   const [stryktipset, europatipset] = await Promise.all([
     $fetch<EventRoot>('/api/event', {
       query: { type: EventType.Stryktipset },
@@ -33,16 +49,44 @@ const hasData = computed(
 </script>
 
 <template>
-  <div v-if="pending">Loading…</div>
+  <!-- No team state -->
+  <div
+    v-if="!teams?.hasTeams"
+    class="flex min-h-[60vh] items-center justify-center"
+  >
+    <Card class="max-w-md">
+      <CardHeader>
+        <CardTitle>Gå med i ett lag</CardTitle>
+        <CardDescription>
+          Du behöver vara med i ett lag för att kunna se och delta i evenemang.
+        </CardDescription>
+      </CardHeader>
+      <CardContent class="space-y-3">
+        <Button asChild class="w-full">
+          <NuxtLink to="/team/create">Skapa nytt lag</NuxtLink>
+        </Button>
+        <Button asChild variant="outline" class="w-full">
+          <NuxtLink to="/team">Utforska lag</NuxtLink>
+        </Button>
+      </CardContent>
+    </Card>
+  </div>
+
+  <!-- Loading -->
+  <div v-else-if="pending">Loading…</div>
+
+  <!-- Error -->
   <div v-else-if="error">Something went wrong</div>
 
-  <div v-if="!hasData">
+  <!-- Empty state -->
+  <div v-else-if="!hasData">
     <EmptyState
       title="Här var det tomt"
       description="Kunde inte hitta omgångar"
     />
   </div>
 
+  <!-- Events -->
   <div v-else>
     <div class="grid-cols-auto grid space-x-4">
       <EventList v-if="data" :event="data.stryktipset" title="Stryktipset" />
