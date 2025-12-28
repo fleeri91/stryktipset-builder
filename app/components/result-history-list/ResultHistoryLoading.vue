@@ -8,13 +8,9 @@ defineProps<{
 </script>
 
 <template>
-  <li class="flex list-none flex-col gap-2">
-    <Card
-      v-for="i in count ?? 5"
-      :key="i"
-      class="flex h-16 w-full flex-col items-center justify-center gap-4 sm:flex-row sm:justify-between"
-    >
-      <Skeleton class="h-16 w-full" />
+  <li class="flex list-none flex-col gap-4">
+    <Card v-for="i in count ?? 5" :key="i" class="flex h-16 w-full p-0">
+      <Skeleton class="h-full w-full" />
     </Card>
   </li>
 </template>
