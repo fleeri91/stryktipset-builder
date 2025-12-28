@@ -10,7 +10,7 @@ defineProps<{
 <template>
   <li>
     <NuxtLink
-      :to="`/event/${result.product.toLowerCase()}/${result.drawNumber}`"
+      :to="`/result/${result.product.toLowerCase()}/${result.drawNumber}`"
     >
       <Card
         class="hover:bg-card/80 flex h-16 w-full flex-col items-center justify-center gap-1 p-8 transition-colors sm:flex-row sm:justify-between sm:gap-2"
