@@ -6,8 +6,9 @@ definePageMeta({
 import { reactive, computed, ref, watch } from 'vue'
 import { toast } from 'vue-sonner'
 
-import { Event, EventEmpty } from '@/components/event'
+import { Event } from '@/components/event'
 import { Button } from '@/components/ui/button'
+import { EmptyState } from '@/components/empty-state'
 
 import type { Outcome, ConfidenceLevel } from '@/components/event'
 import type { Draw } from '~~/shared/types/SvenskaSpel/Event'
@@ -192,7 +193,10 @@ async function submitBong() {
     <div v-if="pending">Loading event...</div>
     <div v-else-if="error">Error loading event: {{ error.message }}</div>
     <div v-else-if="!hasDraws">
-      <EventEmpty />
+      <EmptyState
+        title="Här var det tomt"
+        description="Kunde inte hitta omgång"
+      />
     </div>
     <div class="bg-card w-full max-w-2xl rounded-2xl p-8" v-else>
       <div class="mb-8 flex justify-center">
