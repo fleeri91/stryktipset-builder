@@ -21,7 +21,7 @@
     "nuxt": "^4.2.2",
     "nuxt-auth-utils": "^0.5.26",
     "nuxt-mongoose": "^1.0.6",
-    "reka-ui": "^2.6.1",
+    "reka-ui": "^2.7.0",
     "shadcn-nuxt": "^2.4.3",
     "tailwind-merge": "^3.4.0",
     "vee-validate": "^4.15.1",
