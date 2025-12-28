@@ -8,6 +8,7 @@ import {
   ResultHistoryItem,
   ResultHistoryLoading,
 } from '~/components/result-history-list'
+import ErrorState from '~/components/error-state/ErrorState.vue'
 
 const type = ref<EventType>(EventType.Stryktipset)
 
@@ -48,7 +49,9 @@ const { data, pending, error } = await useFetch<ResultsHistoryRoot>(
               <ResultHistoryLoading :count="4" />
             </div>
 
-            <div v-else-if="error">Något gick fel</div>
+            <div v-else-if="error">
+              <ErrorState title="Något gick fel" description="Försök igen" />
+            </div>
 
             <div v-else-if="data?.resultDates.length">
               <ResultHistoryList :results="data.resultDates">
