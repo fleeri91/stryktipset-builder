@@ -1,19 +1,11 @@
 <script setup lang="ts">
-const title = 'Registrera'
-const description = ''
-
-useSeoMeta({
-  title,
-  description,
-})
-
-import SignupForm from '@/components/auth/RegisterForm.vue'
+import { RegisterForm } from '@/features/auth'
 </script>
 
 <template>
   <div class="flex min-h-svh w-full items-center justify-center p-6 md:p-10">
     <div class="w-full max-w-sm">
-      <SignupForm />
+      <RegisterForm />
     </div>
   </div>
 </template>
