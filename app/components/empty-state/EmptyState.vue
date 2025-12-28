@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import { TriangleAlert } from 'lucide-vue-next'
+import { PackageOpen } from 'lucide-vue-next'
 import {
   Empty,
   EmptyDescription,
@@ -18,7 +18,7 @@ const props = defineProps<{
   <Empty>
     <EmptyHeader>
       <EmptyMedia variant="icon">
-        <TriangleAlert />
+        <PackageOpen />
       </EmptyMedia>
       <EmptyTitle>{{ title }}</EmptyTitle>
       <EmptyDescription>{{ description }}</EmptyDescription>
