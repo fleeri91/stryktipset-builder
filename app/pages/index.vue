@@ -1,5 +1,6 @@
 <script setup lang="ts">
 import type { EventRoot } from '~~/shared/types/SvenskaSpel/Event'
+import type { TeamListItem } from '~~/shared/types/Team'
 import { EventType } from '~~/shared/types/SvenskaSpel/EventType'
 import EventList from '~/components/event-list/EventList.vue'
 import { EmptyState } from '~/components/empty-state'
@@ -18,11 +19,12 @@ definePageMeta({
 })
 
 // Check if user has teams
-const { data: teams } = await useFetch('/api/user/teams')
+const { data: myTeams } = await useFetch<TeamListItem[]>('/api/user/teams')
+const hasTeams = computed(() => myTeams.value && myTeams.value.length > 0)
 
 const { data, pending, error } = await useAsyncData('events', async () => {
   // Only fetch events if user has teams
-  if (!teams.value?.hasTeams) {
+  if (!hasTeams.value) {
     return null
   }
 
@@ -50,10 +52,7 @@ const hasData = computed(
 
 <template>
   <!-- No team state -->
-  <div
-    v-if="!teams?.hasTeams"
-    class="flex min-h-[60vh] items-center justify-center"
-  >
+  <div v-if="!hasTeams" class="flex min-h-[60vh] items-center justify-center">
     <Card class="max-w-md">
       <CardHeader>
         <CardTitle>Gå med i ett lag</CardTitle>
