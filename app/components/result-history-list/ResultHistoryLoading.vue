@@ -12,7 +12,7 @@ defineProps<{
     <Card
       v-for="i in count ?? 5"
       :key="i"
-      class="flex h-16 w-full flex-col items-center justify-center gap-2 sm:flex-row sm:justify-between"
+      class="flex h-16 w-full flex-col items-center justify-center gap-4 sm:flex-row sm:justify-between"
     >
       <Skeleton class="h-16 w-full" />
     </Card>
