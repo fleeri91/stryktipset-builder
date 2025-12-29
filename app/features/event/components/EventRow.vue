@@ -1,13 +1,9 @@
 <script setup lang="ts">
 import { computed } from 'vue'
 import type { AcceptableValue } from 'reka-ui'
-
-import { ToggleGroup, ToggleGroupItem } from '@/components/ui/toggle-group'
-import { Badge } from '@/components/ui/badge'
-import EventConfidence from './EventConfidence.vue'
-
-import type { Outcome, ConfidenceLevel } from './EventItem.vue'
 import type { Event } from '~~/shared/types/SvenskaSpel/Event'
+import type { Outcome, ConfidenceLevel } from '~/features/event/types'
+import EventConfidence from './EventConfidence.vue'
 
 const props = withDefaults(
   defineProps<{

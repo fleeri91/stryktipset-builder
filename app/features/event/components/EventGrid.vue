@@ -1,0 +1,18 @@
+<script setup lang="ts">
+import type { EventRoot } from '~~/shared/types/SvenskaSpel/Event'
+import EventList from './EventList.vue'
+
+interface Props {
+  stryktipset?: EventRoot
+  europatipset?: EventRoot
+}
+
+defineProps<Props>()
+</script>
+
+<template>
+  <div class="grid-cols-auto grid space-x-4">
+    <EventList v-if="stryktipset" :event="stryktipset" title="Stryktipset" />
+    <EventList v-if="europatipset" :event="europatipset" title="Europatipset" />
+  </div>
+</template>

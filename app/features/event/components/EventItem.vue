@@ -1,12 +1,8 @@
 <script setup lang="ts">
 import { ref, watch } from 'vue'
-
-import EventRow from './EventRow.vue'
-
 import type { Event } from '~~/shared/types/SvenskaSpel/Event'
-
-export type Outcome = '1' | 'X' | '2'
-export type ConfidenceLevel = 'UNSURE' | 'NEUTRAL' | 'SAFE'
+import type { Outcome, ConfidenceLevel } from '~/features/event/types'
+import EventRow from './EventRow.vue'
 
 const props = defineProps<{
   event: Event

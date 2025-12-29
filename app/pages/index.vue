@@ -1,14 +1,14 @@
 <script setup lang="ts">
 import type { EventRoot } from '~~/shared/types/SvenskaSpel/Event'
-import type { TeamListItem } from '~~/shared/types/Team'
 import { EventType } from '~~/shared/types/SvenskaSpel/EventType'
+import { EventGrid, NoTeam } from '~/features/event'
 
 definePageMeta({
   layout: 'centered',
 })
 
 // Check if user has teams
-const { data: myTeams } = await useFetch<TeamListItem[]>('/api/user/teams')
+const { data: myTeams } = await useFetch('/api/user/teams')
 const hasTeams = computed(() => myTeams.value && myTeams.value.length > 0)
 
 const { data, pending, error } = await useAsyncData('events', async () => {
@@ -34,31 +34,14 @@ const { data, pending, error } = await useAsyncData('events', async () => {
 
 const hasData = computed(
   () =>
-    data.value?.stryktipset.draws.length ||
-    data.value?.europatipset.draws.length
+    data.value?.stryktipset?.draws?.length ||
+    data.value?.europatipset?.draws?.length
 )
 </script>
 
 <template>
   <!-- No team state -->
-  <div v-if="!hasTeams" class="flex min-h-[60vh] items-center justify-center">
-    <Card class="max-w-md">
-      <CardHeader>
-        <CardTitle>Gå med i ett lag</CardTitle>
-        <CardDescription>
-          Du behöver vara med i ett lag för att kunna se och delta i evenemang.
-        </CardDescription>
-      </CardHeader>
-      <CardContent class="space-y-3">
-        <Button asChild class="w-full">
-          <NuxtLink to="/team/create">Skapa nytt lag</NuxtLink>
-        </Button>
-        <Button asChild variant="outline" class="w-full">
-          <NuxtLink to="/team">Utforska lag</NuxtLink>
-        </Button>
-      </CardContent>
-    </Card>
-  </div>
+  <NoTeam v-if="!hasTeams" />
 
   <!-- Loading -->
   <div v-else-if="pending">Loading…</div>
@@ -67,18 +50,16 @@ const hasData = computed(
   <div v-else-if="error">Something went wrong</div>
 
   <!-- Empty state -->
-  <div v-else-if="!hasData">
-    <EmptyState
-      title="Här var det tomt"
-      description="Kunde inte hitta omgångar"
-    />
-  </div>
+  <EmptyState
+    v-else-if="!hasData"
+    title="Här var det tomt"
+    description="Kunde inte hitta omgångar"
+  />
 
   <!-- Events -->
-  <div v-else>
-    <div class="grid-cols-auto grid space-x-4">
-      <EventList v-if="data" :event="data.stryktipset" title="Stryktipset" />
-      <EventList v-if="data" :event="data.europatipset" title="Europatipset" />
-    </div>
-  </div>
+  <EventGrid
+    v-else-if="data"
+    :stryktipset="data.stryktipset"
+    :europatipset="data.europatipset"
+  />
 </template>
