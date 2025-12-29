@@ -1,8 +1,6 @@
 import type { TeamListItem } from '~~/shared/types/Team'
 
 export default defineEventHandler(async (event): Promise<TeamListItem[]> => {
-  const session = await requireUserSession(event)
-
   // Get query parameters for pagination
   const query = getQuery(event)
   const limit = Number(query.limit) || 20

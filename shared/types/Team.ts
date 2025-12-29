@@ -3,8 +3,13 @@ export interface TeamRoot {
   name: string
   owner: Owner
   members: Member[]
+  memberCount: number
   createdAt: string
   updatedAt: string
+  // Metadata
+  isOwner?: boolean
+  isMember?: boolean
+  hasPendingRequest?: boolean
 }
 
 export interface Owner {
@@ -18,6 +23,16 @@ export interface Member {
   name: string
   email: string
   joinedAt: string
+}
+
+export interface JoinRequest {
+  _id: string
+  user: {
+    _id: string
+    name: string
+    email: string
+  }
+  requestedAt: string
 }
 
 export type TeamListItem = Omit<TeamRoot, 'updatedAt' | 'owner'> & {
