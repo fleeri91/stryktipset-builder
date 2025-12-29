@@ -30,6 +30,27 @@ export const Team = defineMongooseModel({
       ],
       default: [],
     },
+    joinRequests: {
+      type: [
+        {
+          userId: {
+            type: Schema.Types.ObjectId,
+            ref: 'User',
+            required: true,
+          },
+          requestedAt: {
+            type: Date,
+            default: Date.now,
+          },
+          status: {
+            type: String,
+            enum: ['pending', 'accepted', 'rejected'],
+            default: 'pending',
+          },
+        },
+      ],
+      default: [],
+    },
   },
   options: {
     timestamps: true,
@@ -37,5 +58,6 @@ export const Team = defineMongooseModel({
   hooks(schema) {
     schema.index({ owner: 1 })
     schema.index({ 'members.userId': 1 })
+    schema.index({ 'joinRequests.userId': 1 })
   },
 })
