@@ -1,16 +1,8 @@
 <script setup lang="ts">
-definePageMeta({
-  middleware: 'auth',
-})
-
 import { reactive, computed, ref, watch } from 'vue'
 import { toast } from 'vue-sonner'
 
-import { Event } from '@/components/event'
-import { Button } from '@/components/ui/button'
-import { EmptyState } from '@/components/empty-state'
-
-import type { Outcome, ConfidenceLevel } from '@/components/event'
+import type { Outcome, ConfidenceLevel } from '@/components/event/Event.vue'
 import type { Draw } from '~~/shared/types/SvenskaSpel/Event'
 import type { BongRoot } from '~~/shared/types/Bong'
 

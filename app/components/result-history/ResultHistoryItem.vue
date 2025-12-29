@@ -1,6 +1,5 @@
 <script setup lang="ts">
 import type { ResultDate } from '~~/shared/types/SvenskaSpel/ResultsHistory'
-import { Card } from '@/components/ui/card'
 
 defineProps<{
   result: ResultDate

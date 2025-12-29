@@ -1,6 +1,4 @@
 <script setup lang="ts">
-import { Button } from '@/components/ui/button'
-import { Separator } from '@/components/ui/separator'
 import { TeamGrid, useMyTeams, useExploreTeams } from '~/features/team'
 
 const {

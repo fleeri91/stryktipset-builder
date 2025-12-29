@@ -1,21 +1,6 @@
 <script setup lang="ts">
 import { ref, reactive, watch } from 'vue'
 import { toast } from 'vue-sonner'
-import {
-  Form,
-  FormControl,
-  FormField,
-  FormItem,
-  FormLabel,
-  FormMessage,
-} from '@/components/ui/form'
-import { Input } from '@/components/ui/input'
-import { Button } from '@/components/ui/button'
-import { Separator } from '@/components/ui/separator'
-
-definePageMeta({
-  middleware: 'auth',
-})
 
 const { user } = useUserSession()
 

@@ -2,19 +2,8 @@
 import type { EventRoot } from '~~/shared/types/SvenskaSpel/Event'
 import type { TeamListItem } from '~~/shared/types/Team'
 import { EventType } from '~~/shared/types/SvenskaSpel/EventType'
-import EventList from '~/components/event-list/EventList.vue'
-import { EmptyState } from '~/components/empty-state'
-import { Button } from '@/components/ui/button'
-import {
-  Card,
-  CardContent,
-  CardDescription,
-  CardHeader,
-  CardTitle,
-} from '@/components/ui/card'
 
 definePageMeta({
-  middleware: 'auth',
   layout: 'centered',
 })
 

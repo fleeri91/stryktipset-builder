@@ -1,14 +1,6 @@
 <script setup lang="ts">
-import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs'
 import type { ResultsHistoryRoot } from '~~/shared/types/SvenskaSpel/ResultsHistory'
 import { EventType } from '~~/shared/types/SvenskaSpel/EventType'
-
-import {
-  ResultHistoryList,
-  ResultHistoryItem,
-  ResultHistoryLoading,
-} from '~/components/result-history-list'
-import ErrorState from '~/components/error-state/ErrorState.vue'
 
 const type = ref<EventType>(EventType.Stryktipset)
 

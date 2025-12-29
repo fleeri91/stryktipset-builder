@@ -1,7 +1,7 @@
 <script setup lang="ts">
 import { computed } from 'vue'
 
-import type { ConfidenceLevel } from '.'
+import type { ConfidenceLevel } from './EventItem.vue'
 
 const props = withDefaults(
   defineProps<{

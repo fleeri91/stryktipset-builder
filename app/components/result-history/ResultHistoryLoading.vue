@@ -1,7 +1,4 @@
 <script setup lang="ts">
-import { Card } from '@/components/ui/card'
-import { Skeleton } from '@/components/ui/skeleton'
-
 defineProps<{
   count?: number
 }>()
