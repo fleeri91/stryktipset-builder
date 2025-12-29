@@ -93,18 +93,18 @@ const onSubmit = form.handleSubmit(async (values) => {
 </script>
 
 <template>
-  <div class="flex min-h-screen items-center justify-center px-4 py-12">
-    <Card class="w-full max-w-md">
-      <CardHeader class="space-y-1">
-        <CardTitle class="text-center text-2xl font-bold">
+  <div class="flex w-full justify-center">
+    <Card class="w-full max-w-md shadow-lg">
+      <CardHeader class="space-y-2 text-center">
+        <CardTitle class="text-2xl font-semibold tracking-tight">
           Skapa konto
         </CardTitle>
-        <CardDescription class="text-center">
+        <CardDescription class="text-sm">
           Fyll i dina uppgifter för att komma igång
         </CardDescription>
       </CardHeader>
 
-      <CardContent>
+      <CardContent class="space-y-6">
         <form @submit="onSubmit" class="space-y-4">
           <Alert v-if="error" variant="destructive">
             <AlertDescription>{{ error }}</AlertDescription>
@@ -116,7 +116,7 @@ const onSubmit = form.handleSubmit(async (values) => {
               <FormControl>
                 <Input
                   type="text"
-                  placeholder="Namn"
+                  placeholder="Ditt namn"
                   v-bind="componentField"
                   :disabled="isLoading"
                 />
@@ -153,8 +153,8 @@ const onSubmit = form.handleSubmit(async (values) => {
                   autocomplete="new-password"
                 />
               </FormControl>
-              <FormDescription>
-                Lösenordet måste innehålla minst 8 tecken
+              <FormDescription class="text-xs">
+                Minst 8 tecken
               </FormDescription>
               <FormMessage />
             </FormItem>
@@ -176,27 +176,23 @@ const onSubmit = form.handleSubmit(async (values) => {
             </FormItem>
           </FormField>
 
-          <button
-            type="submit"
-            :disabled="isLoading"
-            class="bg-primary text-primary-foreground ring-offset-background hover:bg-primary/90 focus-visible:ring-ring inline-flex w-full items-center justify-center rounded-md px-4 py-2 text-sm font-medium transition-colors focus-visible:ring-2 focus-visible:ring-offset-2 focus-visible:outline-none disabled:pointer-events-none disabled:opacity-50"
-          >
+          <Button type="submit" class="w-full" :disabled="isLoading">
             <Loader2
               v-if="isLoading"
-              aria-hidden="true"
               class="mr-2 h-4 w-4 animate-spin"
+              aria-hidden="true"
             />
             {{ isLoading ? 'Skapar konto...' : 'Skapa konto' }}
-          </button>
+          </Button>
         </form>
       </CardContent>
 
-      <CardFooter class="flex justify-center">
-        <p class="text-sm text-gray-600">
+      <CardFooter class="flex flex-col gap-4 border-t pt-6">
+        <p class="text-muted-foreground text-center text-sm">
           Har du redan ett konto?
           <NuxtLink
             to="/login"
-            class="font-medium text-blue-500 underline hover:no-underline"
+            class="text-primary font-medium underline-offset-4 hover:underline"
           >
             Logga in
           </NuxtLink>
