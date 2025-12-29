@@ -44,7 +44,7 @@ function onConfidenceUpdate(value: ConfidenceLevel) {
 </script>
 
 <template>
-  <div class="flex flex-col gap-2 border-b py-3">
+  <div class="flex flex-col">
     <div class="flex items-center gap-4">
       <div class="flex w-full items-center gap-2 text-sm font-bold">
         <Badge class="h-8 w-8 font-extrabold">

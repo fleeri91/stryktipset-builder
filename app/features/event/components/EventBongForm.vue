@@ -33,8 +33,8 @@ function handleConfidenceUpdate(eventNumber: number, value: ConfidenceLevel) {
 </script>
 
 <template>
-  <div class="bg-card w-full max-w-2xl rounded-2xl p-8">
-    <div class="mb-8 flex justify-center">
+  <Card class="w-full max-w-2xl p-8">
+    <div class="mb-2 flex justify-center">
       <h1 class="inline-flex gap-2 text-2xl font-bold">
         <span>{{ eventType ?? 'Event' }}</span>
         <NuxtTime
@@ -60,11 +60,11 @@ function handleConfidenceUpdate(eventNumber: number, value: ConfidenceLevel) {
     />
 
     <!-- Submit button -->
-    <div class="mt-8 flex justify-center">
+    <div class="mt-4 flex justify-center">
       <Button
         @click="emit('submit')"
         :disabled="!isValidBong || isSubmitting"
-        class="w-full max-w-md"
+        class="w-full"
         size="lg"
       >
         {{
@@ -78,12 +78,5 @@ function handleConfidenceUpdate(eventNumber: number, value: ConfidenceLevel) {
         }}
       </Button>
     </div>
-
-    <p
-      v-if="!isValidBong"
-      class="text-muted-foreground mt-2 text-center text-sm"
-    >
-      Välj minst ett alternativ för alla matcher
-    </p>
-  </div>
+  </Card>
 </template>
