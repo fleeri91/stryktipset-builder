@@ -16,7 +16,7 @@ defineProps<{
           :to="`/event/${draw.productName.toLocaleLowerCase()}/${draw.drawNumber}`"
         >
           <Card
-            class="hover:bg-card/80 flex h-48 w-72 flex-col items-center justify-center gap-2 p-4 transition-colors"
+            class="hover:bg-card/80 flex h-48 w-96 flex-col items-center justify-center gap-2 p-4 transition-colors"
           >
             <h2 class="text-lg font-bold">
               {{ draw.productName ?? 'Event draw' }}
