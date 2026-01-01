@@ -1,5 +1,6 @@
 <script setup lang="ts">
 import { TeamGrid, useMyTeams, useExploreTeams } from '~/features/team'
+import { TeamLoading } from '~/features/team'
 
 const {
   data: myTeams,
@@ -29,7 +30,9 @@ const hasMyTeams = computed(() => myTeams.value && myTeams.value.length > 0)
     <section v-if="myTeamsPending || myTeamsError || hasMyTeams" class="mt-8">
       <h2 class="mb-4 text-2xl font-semibold">Mina lag</h2>
 
-      <div v-if="myTeamsPending" class="text-center">Laddar dina lag...</div>
+      <div v-if="myTeamsPending">
+        <TeamLoading :count="2" />
+      </div>
       <div v-else-if="myTeamsError" class="text-red-500">
         Kunde inte hämta dina lag.
       </div>
@@ -42,7 +45,9 @@ const hasMyTeams = computed(() => myTeams.value && myTeams.value.length > 0)
     <section :class="hasMyTeams ? '' : 'mt-8'">
       <h2 class="mb-4 text-2xl font-semibold">Utforska lag</h2>
 
-      <div v-if="exploreTeamsPending" class="text-center">Laddar lag...</div>
+      <div v-if="exploreTeamsPending">
+        <TeamLoading :count="2" />
+      </div>
       <div v-else-if="exploreTeamsError" class="text-red-500">
         Kunde inte hämta lag. Försök igen senare.
       </div>
