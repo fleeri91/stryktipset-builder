@@ -8,7 +8,7 @@ definePageMeta({
 })
 
 // Check if user has teams
-const { data: myTeams } = await useFetch('/api/user/teams')
+const { data: myTeams } = await useDelayedFetch('/api/user/teams')
 const hasTeams = computed(() => myTeams.value && myTeams.value.length > 0)
 
 const { data, pending, error } = await useAsyncData('events', async () => {

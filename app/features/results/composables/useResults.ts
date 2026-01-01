@@ -10,7 +10,7 @@ export interface UseResultsOptions {
 export const useResults = (options: UseResultsOptions) => {
   const { type, year, month } = options
 
-  return useFetch<ResultsHistoryRoot>('/api/results', {
+  return useDelayedFetch<ResultsHistoryRoot>('/api/results', {
     query: {
       type,
       year,

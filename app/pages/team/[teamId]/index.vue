@@ -10,7 +10,7 @@ const {
   data: team,
   error,
   pending,
-} = await useFetch<TeamRoot>(`/api/team/${teamId}`)
+} = await useDelayedFetch<TeamRoot>(`/api/team/${teamId}`)
 
 const errorMessage = computed(
   () => (error.value as { message?: string })?.message || 'Okänt fel'
