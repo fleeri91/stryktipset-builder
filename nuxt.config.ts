@@ -9,6 +9,7 @@ export default defineNuxtConfig({
     'shadcn-nuxt',
     'nuxt-auth-utils',
     '@nuxtjs/color-mode',
+    '@nuxt/image',
   ],
   mongoose: {
     uri: process.env.MONGODB_URI,
