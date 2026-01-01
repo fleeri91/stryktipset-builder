@@ -17,7 +17,7 @@ defineProps<Props>()
 
 <template>
   <Card
-    class="hover:border-primary cursor-pointer transition-colors"
+    class="hover:border-primary min-h-34 cursor-pointer transition-colors"
     @click="navigateTo(`/team/${team._id}`)"
   >
     <CardHeader>
