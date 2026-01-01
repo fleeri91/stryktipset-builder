@@ -20,7 +20,7 @@ const props = defineProps<Props>()
 // Use useAsyncData instead of useFetch for better type inference
 const { data: requests, refresh } = await useAsyncData(
   `join-requests-${props.teamId}`,
-  () => $fetch<JoinRequest[]>(`/api/team/${props.teamId}/join-requests`)
+  () => $fetch<JoinRequest[]>(`/api/team/${props.teamId}/join-request`)
 )
 
 const processing = ref<string | null>(null)
