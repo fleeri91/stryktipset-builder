@@ -1,13 +1,13 @@
 import type { TeamListItem } from '~~/shared/types/Team'
 
 export const useTeams = () => {
-  return useFetch<TeamListItem[]>('/api/team', {
+  return useDelayedFetch<TeamListItem[]>('/api/team', {
     key: 'all-teams',
   })
 }
 
 export const useMyTeams = () => {
-  return useFetch<TeamListItem[]>('/api/user/teams', {
+  return useDelayedFetch<TeamListItem[]>('/api/user/teams', {
     key: 'my-teams',
   })
 }
