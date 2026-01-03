@@ -44,7 +44,7 @@ const handleLogout = async () => {
 
   try {
     await clear()
-    await navigateTo('/register', { external: true })
+    await navigateTo('/login', { external: true })
   } catch (error) {
     console.error('Logout error:', error)
     isLoggingOut.value = false
