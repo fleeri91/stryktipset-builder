@@ -1,7 +1,13 @@
 <script setup lang="ts">
 import type { TeamRoot, Member } from '~~/shared/types/Team'
-import { TeamJoinButton, TeamJoinRequest } from '~/features/team'
+import {
+  TeamJoinButton,
+  TeamJoinRequest,
+  TeamDrawsList,
+  useTeamDraws,
+} from '~/features/team'
 import { computed } from 'vue'
+import { Separator } from '@/components/ui/separator'
 
 const route = useRoute()
 const teamId = route.params.teamId as string
@@ -10,7 +16,16 @@ const {
   data: team,
   error,
   pending,
-} = await useDelayedFetch<TeamRoot>(`/api/team/${teamId}`)
+} = await useFetch<TeamRoot>(`/api/team/${teamId}`)
+
+// Fetch draws only if user is a member
+const shouldFetchDraws = computed(
+  () => team.value?.isMember || team.value?.isOwner
+)
+
+const { data: draws, pending: drawsPending } = shouldFetchDraws.value
+  ? useTeamDraws(teamId)
+  : { data: ref([]), pending: ref(false) }
 
 const errorMessage = computed(
   () => (error.value as { message?: string })?.message || 'Okänt fel'
@@ -27,7 +42,7 @@ const membersWithFormattedDate = computed(() => {
 </script>
 
 <template>
-  <div class="mx-auto mt-12 max-w-2xl">
+  <div class="mx-auto mt-12 max-w-4xl px-4">
     <div v-if="pending">Laddar…</div>
 
     <div v-else-if="error">
@@ -50,12 +65,25 @@ const membersWithFormattedDate = computed(() => {
 
       <!-- Members list (only visible to members) -->
       <div v-if="team.isMember || team.isOwner">
-        <h2 class="mt-4 text-xl font-semibold">Medlemmar:</h2>
+        <h2 class="text-xl font-semibold">Medlemmar</h2>
         <ul class="mt-2 ml-6 list-disc">
           <li v-for="member in membersWithFormattedDate" :key="member._id">
             {{ member.name }} - Gick med: {{ member.joinedAtFormatted }}
           </li>
         </ul>
+      </div>
+
+      <!-- Separator -->
+      <Separator v-if="team.isMember || team.isOwner" class="my-8" />
+
+      <!-- Team Draws (only visible to members) -->
+      <div v-if="team.isMember || team.isOwner">
+        <h2 class="mb-4 text-2xl font-semibold">Omgångar</h2>
+        <TeamDrawsList
+          :draws="draws || []"
+          :team-id="teamId"
+          :loading="drawsPending"
+        />
       </div>
 
       <!-- Info for non-members -->

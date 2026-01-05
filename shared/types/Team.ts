@@ -93,3 +93,13 @@ export interface GeneratedPrediction {
   description: string
   sportEventId: number
 }
+
+export interface TeamDraw {
+  drawNumber: number
+  drawComment: string
+  closeTime: string
+  productName: string
+  participatingMembers: number
+  totalMembers: number
+  canGenerate: boolean
+}
