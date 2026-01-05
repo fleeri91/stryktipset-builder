@@ -1,6 +1,5 @@
 <script setup lang="ts">
 import type { EventRoot } from '~~/shared/types/SvenskaSpel/Event'
-import EventList from './EventList.vue'
 
 interface Props {
   stryktipset?: EventRoot

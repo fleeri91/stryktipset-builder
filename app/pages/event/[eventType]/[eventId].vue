@@ -1,10 +1,9 @@
 <script setup lang="ts">
 import {
-  EventBongForm,
   useEventDraw,
   useEventBong,
   useEventBongSubmit,
-} from '~/features/event'
+} from '~/pages/event/composables'
 
 const route = useRoute()
 const drawNumber = route.params.eventId as string

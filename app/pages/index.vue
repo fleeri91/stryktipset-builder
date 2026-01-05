@@ -1,7 +1,6 @@
 <script setup lang="ts">
 import type { EventRoot } from '~~/shared/types/SvenskaSpel/Event'
 import { EventType } from '~~/shared/types/SvenskaSpel/EventType'
-import { EventGrid, NoTeam } from '~/features/event'
 
 definePageMeta({
   layout: 'centered',

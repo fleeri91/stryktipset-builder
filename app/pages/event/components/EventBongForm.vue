@@ -1,7 +1,6 @@
 <script setup lang="ts">
-import EventItem from './EventItem.vue'
 import type { Event } from '~~/shared/types/SvenskaSpel/Event'
-import type { Outcome, ConfidenceLevel } from '~/features/event/types'
+import type { Outcome, ConfidenceLevel } from '~/pages/event/types'
 
 interface Props {
   events: Event[]

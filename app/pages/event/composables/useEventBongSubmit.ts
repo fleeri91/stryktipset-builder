@@ -1,6 +1,6 @@
 import { ref, computed } from 'vue'
 import { toast } from 'vue-sonner'
-import type { Outcome, ConfidenceLevel } from '~/features/event/types'
+import type { Outcome, ConfidenceLevel } from '~/pages/event/types'
 import type { Draw } from '~~/shared/types/SvenskaSpel/Event'
 import type { BongRoot } from '~~/shared/types/Bong'
 import type { Event } from '~~/shared/types/SvenskaSpel/Event'

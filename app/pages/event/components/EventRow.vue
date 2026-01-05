@@ -2,8 +2,7 @@
 import { computed } from 'vue'
 import type { AcceptableValue } from 'reka-ui'
 import type { Event } from '~~/shared/types/SvenskaSpel/Event'
-import type { Outcome, ConfidenceLevel } from '~/features/event/types'
-import EventConfidence from './EventConfidence.vue'
+import type { Outcome, ConfidenceLevel } from '~/pages/event/types'
 
 const props = withDefaults(
   defineProps<{

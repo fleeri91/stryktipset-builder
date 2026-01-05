@@ -1,14 +1,3 @@
-<script setup lang="ts">
-import { Button } from '@/components/ui/button'
-import {
-  Card,
-  CardContent,
-  CardDescription,
-  CardHeader,
-  CardTitle,
-} from '@/components/ui/card'
-</script>
-
 <template>
   <div class="flex min-h-[60vh] items-center justify-center">
     <Card class="max-w-md">

@@ -1,6 +1,5 @@
 <script setup lang="ts">
 import type { EventRoot } from '~~/shared/types/SvenskaSpel/Event'
-import { Card } from '@/components/ui/card'
 
 defineProps<{
   event: EventRoot
