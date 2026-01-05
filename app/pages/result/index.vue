@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import { ResultTabs, useCurrentResults } from '~/features/results'
+import { useCurrentResults } from '~/pages/result/composables'
 
 const { type, data, pending, error } = useCurrentResults()
 </script>
