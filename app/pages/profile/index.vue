@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import { ProfileSettings, useUserProfile } from '~/features/user'
+import { useUserProfile } from '~/pages/profile/composables'
 
 const { state, isUpdatingName, updateName } = useUserProfile()
 </script>

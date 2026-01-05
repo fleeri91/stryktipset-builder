@@ -1,7 +1,4 @@
 <script setup lang="ts">
-import ProfileHeader from './ProfileHeader.vue'
-import ProfileForm from './ProfileForm.vue'
-
 interface Props {
   name: string
   isUpdating: boolean
