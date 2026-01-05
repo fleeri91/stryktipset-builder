@@ -1,6 +1,5 @@
 <script setup lang="ts">
 import type { TeamListItem } from '~~/shared/types/Team'
-import TeamCard from './TeamCard.vue'
 
 interface Props {
   teams: TeamListItem[]

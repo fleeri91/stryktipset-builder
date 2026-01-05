@@ -1,6 +1,5 @@
 <script setup lang="ts">
-import { TeamGrid, useMyTeams, useExploreTeams } from '~/features/team'
-import { TeamLoading } from '~/features/team'
+import { useMyTeams, useExploreTeams } from '~/pages/team/composables'
 
 const {
   data: myTeams,

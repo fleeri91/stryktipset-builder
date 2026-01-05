@@ -1,14 +1,6 @@
 <script setup lang="ts">
 import { ref } from 'vue'
 import type { JoinRequest } from '~~/shared/types/Team'
-import { Button } from '@/components/ui/button'
-import {
-  Card,
-  CardContent,
-  CardDescription,
-  CardHeader,
-  CardTitle,
-} from '@/components/ui/card'
 import { toast } from 'vue-sonner'
 
 interface Props {

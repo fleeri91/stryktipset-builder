@@ -1,13 +1,7 @@
 <script setup lang="ts">
 import type { TeamRoot, Member } from '~~/shared/types/Team'
-import {
-  TeamJoinButton,
-  TeamJoinRequest,
-  TeamDrawsList,
-  useTeamDraws,
-} from '~/features/team'
+import { useTeamDraws } from '~/pages/team/composables'
 import { computed } from 'vue'
-import { Separator } from '@/components/ui/separator'
 
 const route = useRoute()
 const teamId = route.params.teamId as string

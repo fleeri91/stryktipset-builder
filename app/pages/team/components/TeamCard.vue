@@ -1,12 +1,5 @@
 <script setup lang="ts">
 import type { TeamListItem } from '~~/shared/types/Team'
-import {
-  Card,
-  CardContent,
-  CardDescription,
-  CardHeader,
-  CardTitle,
-} from '@/components/ui/card'
 
 interface Props {
   team: TeamListItem

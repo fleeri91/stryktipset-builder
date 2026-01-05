@@ -1,7 +1,5 @@
 <script setup lang="ts">
 import type { TeamDraw } from '~~/shared/types/Team'
-import TeamDrawCard from './TeamDrawCard.vue'
-import EmptyState from '@/components/EmptyState.vue'
 
 interface Props {
   draws: TeamDraw[]
