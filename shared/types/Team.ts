@@ -74,26 +74,6 @@ export interface TeamBongPrediction {
   description: string
 }
 
-export interface GeneratedBong {
-  drawNumber: number
-  drawComment: string
-  closeTime: string
-  predictions: GeneratedPrediction[]
-  metadata: {
-    teamSize: number
-    participatingMembers: number
-    strategy: string
-  }
-}
-
-export interface GeneratedPrediction {
-  eventNumber: number
-  outcome: string[]
-  confidence: 'SAFE' | 'NEUTRAL' | 'UNSURE'
-  description: string
-  sportEventId: number
-}
-
 export interface TeamDraw {
   drawNumber: number
   drawComment: string
