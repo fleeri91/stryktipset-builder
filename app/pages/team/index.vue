@@ -35,7 +35,11 @@ const hasMyTeams = computed(() => myTeams.value && myTeams.value.length > 0)
       <div v-else-if="myTeamsError" class="text-red-500">
         Kunde inte hämta dina lag.
       </div>
-      <TeamGrid v-else-if="myTeams" :teams="myTeams" />
+      <TeamGrid
+        v-else-if="myTeams"
+        :teams="myTeams"
+        :loading="myTeamsPending"
+      />
     </section>
 
     <Separator v-if="hasMyTeams" class="my-8" />
@@ -53,6 +57,7 @@ const hasMyTeams = computed(() => myTeams.value && myTeams.value.length > 0)
       <TeamGrid
         v-else-if="exploreTeams"
         :teams="exploreTeams"
+        :loading="exploreTeamsPending"
         empty-message="Inga fler lag att utforska."
       />
     </section>
