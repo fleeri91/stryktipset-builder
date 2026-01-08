@@ -8,7 +8,7 @@ interface Props {
   error?: any
 }
 
-const props = defineProps<Props>()
+defineProps<Props>()
 
 const type = defineModel<EventType>({ required: true })
 </script>
