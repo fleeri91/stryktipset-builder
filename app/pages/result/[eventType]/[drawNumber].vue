@@ -1,1 +1,1 @@
-<template>History details</template>
+<template><ResultBong /></template>

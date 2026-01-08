@@ -13,13 +13,10 @@ const emit = defineEmits<{
 </script>
 
 <template>
-  <div class="mx-auto max-w-2xl">
-    <ProfileHeader />
-    <ProfileForm
-      :name="name"
-      :is-updating="isUpdating"
-      @update:name="emit('update:name', $event)"
-      @submit="emit('submit')"
-    />
-  </div>
+  <ProfileForm
+    :name="name"
+    :is-updating="isUpdating"
+    @update:name="emit('update:name', $event)"
+    @submit="emit('submit')"
+  />
 </template>
