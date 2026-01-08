@@ -11,7 +11,7 @@ const { loggedIn, user } = useUserSession()
     <template v-if="loggedIn && user">
       <SidebarNav />
     </template>
-    <SidebarInset>
+    <SidebarInset class="from-sidebar to-background bg-radial">
       <NuxtLayout>
         <Toaster />
         <NuxtPage />
