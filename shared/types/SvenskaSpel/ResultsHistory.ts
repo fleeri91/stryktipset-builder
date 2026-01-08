@@ -20,8 +20,13 @@ export interface ResultDate {
   closeDate: string
   product: string
   drawNumber: number
-  drawState: string
+  drawState: DrawState
   drawStateId: number
+}
+
+export enum DrawState {
+  Finalized = 'Finalized',
+  Open = 'Open',
 }
 
 export interface RequestInfo {
