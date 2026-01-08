@@ -15,6 +15,9 @@ export default defineNuxtConfig({
       pathPrefix: false,
     },
   ],
+  colorMode: {
+    preference: 'dark',
+  },
   modules: [
     'nuxt-mongoose',
     'shadcn-nuxt',
