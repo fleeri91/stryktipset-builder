@@ -1,17 +1,23 @@
 <script setup lang="ts">
+import { EventType } from '~~/shared/types/SvenskaSpel/EventType'
+import { useResultsData } from '~/pages/result/composables'
+
 definePageMeta({
   layout: 'default',
 })
 
-import { useCurrentResults } from '~/pages/result/composables'
+const now = new Date()
 
-const { type, data, pending, error } = useCurrentResults()
+const type = ref<EventType>(EventType.Stryktipset)
+const year = ref(now.getFullYear())
+const month = ref(now.getMonth() + 1)
 
-console.log(data)
+const { data, pending, error } = useResultsData(type, year, month)
 </script>
 
 <template>
   <PageHeader title="Resultat" />
+
   <PageSection>
     <ResultTabs v-model="type" :data="data" :pending="pending" :error="error" />
   </PageSection>
