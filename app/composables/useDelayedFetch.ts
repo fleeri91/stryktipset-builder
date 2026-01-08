@@ -6,7 +6,7 @@ export const useDelayedFetch = <T>(
   url: Parameters<typeof useFetch>[0],
   options?: DelayedFetchOptions<T>
 ) => {
-  const { delay = 1000, ...fetchOptions } = options || {}
+  const { delay = 300, ...fetchOptions } = options || {}
 
   return useFetch<T>(url, {
     ...fetchOptions,
