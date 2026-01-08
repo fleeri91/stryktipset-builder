@@ -1,1 +1,1 @@
-export { useResults, useCurrentResults } from './useResults'
+export { useResultsData } from './useResults'
