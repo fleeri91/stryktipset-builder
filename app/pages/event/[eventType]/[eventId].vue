@@ -1,4 +1,8 @@
 <script setup lang="ts">
+definePageMeta({
+  layout: 'centered',
+})
+
 import {
   useEventDraw,
   useEventBong,
@@ -31,27 +35,25 @@ const { isSubmitting, isValidBong, submitBong } = useEventBongSubmit(
 </script>
 
 <template>
-  <div class="flex min-h-screen items-center justify-center p-4">
-    <div v-if="pending">Loading event...</div>
-    <div v-else-if="error">Error loading event: {{ error.message }}</div>
-    <EmptyState
-      v-else-if="!hasDraws"
-      title="Här var det tomt"
-      description="Kunde inte hitta omgång"
-    />
-    <EventBongForm
-      v-else
-      :events="events"
-      :event-type="eventType"
-      :event-date="eventDate"
-      :selections="selections"
-      :confidence-levels="confidenceLevels"
-      :is-valid-bong="isValidBong"
-      :is-submitting="isSubmitting"
-      :is-editing="isEditing"
-      @update:selections="handleSelectionsUpdate"
-      @update:confidence="handleConfidenceUpdate"
-      @submit="submitBong"
-    />
-  </div>
+  <div v-if="pending">Loading event...</div>
+  <div v-else-if="error">Error loading event: {{ error.message }}</div>
+  <EmptyState
+    v-else-if="!hasDraws"
+    title="Här var det tomt"
+    description="Kunde inte hitta omgång"
+  />
+  <EventBongForm
+    v-else
+    :events="events"
+    :event-type="eventType"
+    :event-date="eventDate"
+    :selections="selections"
+    :confidence-levels="confidenceLevels"
+    :is-valid-bong="isValidBong"
+    :is-submitting="isSubmitting"
+    :is-editing="isEditing"
+    @update:selections="handleSelectionsUpdate"
+    @update:confidence="handleConfidenceUpdate"
+    @submit="submitBong"
+  />
 </template>

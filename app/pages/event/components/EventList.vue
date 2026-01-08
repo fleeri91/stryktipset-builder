@@ -15,12 +15,12 @@ defineProps<{
           :to="`/event/${draw.productName.toLocaleLowerCase()}/${draw.drawNumber}`"
         >
           <Card
-            class="hover:bg-card/80 flex h-48 w-96 flex-col items-center justify-center gap-2 p-4 transition-colors"
+            class="hover:bg-card/80 flex h-32 w-full flex-col items-center justify-center gap-2 p-4 transition-colors sm:h-48 sm:w-96"
           >
-            <h2 class="text-lg font-bold">
+            <h2 class="font-bold sm:text-lg">
               {{ draw.productName ?? 'Event draw' }}
             </h2>
-            <p class="text-gray-400">
+            <p class="text-sm text-gray-400 sm:text-base">
               <NuxtTime
                 :datetime="draw.closeTime"
                 year="numeric"

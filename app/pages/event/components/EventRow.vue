@@ -44,9 +44,9 @@ function onConfidenceUpdate(value: ConfidenceLevel) {
 
 <template>
   <div class="flex flex-col">
-    <div class="flex items-center gap-4">
-      <div class="flex w-full items-center gap-2 text-sm font-bold">
-        <Badge class="h-8 w-8 font-extrabold">
+    <div class="flex items-center gap-2 sm:gap-4">
+      <div class="flex w-full items-center gap-2 text-xs font-bold sm:text-sm">
+        <Badge class="h-6 w-6 font-extrabold sm:h-8 sm:w-8">
           {{ event.eventNumber }}
         </Badge>
         <span>{{ home }} – {{ away }}</span>
@@ -58,6 +58,7 @@ function onConfidenceUpdate(value: ConfidenceLevel) {
         :model-value="modelValue"
         @update:model-value="onUpdate"
         class="flex"
+        size="sm"
       >
         <ToggleGroupItem value="1" aria-label="Hemmavinst">1</ToggleGroupItem>
         <ToggleGroupItem value="X" aria-label="Oavgjort">X</ToggleGroupItem>

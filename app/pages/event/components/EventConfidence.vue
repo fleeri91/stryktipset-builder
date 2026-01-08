@@ -42,7 +42,7 @@ function toggle() {
 
 <template>
   <button
-    class="min-h-6 min-w-6 transform-gpu rounded-full transition-transform duration-200 ease-out hover:scale-115"
+    class="min-h-5 min-w-5 transform-gpu rounded-full transition-transform duration-200 ease-out hover:scale-115 sm:min-h-6 sm:min-w-6"
     :class="colorClass"
     @click="toggle"
   />

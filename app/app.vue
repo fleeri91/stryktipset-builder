@@ -6,7 +6,11 @@ const { loggedIn, user } = useUserSession()
 
 <!-- app.vue -->
 <template>
-  <SidebarProvider>
+  <SidebarProvider
+    :style="{
+      '--sidebar-width': '0',
+    }"
+  >
     <NuxtLoadingIndicator />
     <template v-if="loggedIn && user">
       <SidebarNav />

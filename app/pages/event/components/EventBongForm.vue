@@ -32,9 +32,13 @@ function handleConfidenceUpdate(eventNumber: number, value: ConfidenceLevel) {
 </script>
 
 <template>
-  <Card class="w-full max-w-2xl p-8">
+  <div
+    class="sm:bg-card text-card-foreground flex w-full max-w-2xl flex-col gap-6 p-4 shadow-sm sm:rounded-xl sm:border sm:p-8"
+  >
     <div class="mb-2 flex justify-center">
-      <h1 class="inline-flex gap-2 text-2xl font-bold">
+      <h1
+        class="inline-flex flex-col gap-2 text-center text-lg font-bold sm:flex-row sm:text-2xl"
+      >
         <span>{{ eventType ?? 'Event' }}</span>
         <NuxtTime
           :datetime="eventDate"
@@ -77,5 +81,5 @@ function handleConfidenceUpdate(eventNumber: number, value: ConfidenceLevel) {
         }}
       </Button>
     </div>
-  </Card>
+  </div>
 </template>

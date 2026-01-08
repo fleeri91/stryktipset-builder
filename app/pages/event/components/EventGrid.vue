@@ -10,7 +10,7 @@ defineProps<Props>()
 </script>
 
 <template>
-  <div class="flex space-x-4">
+  <div class="flex sm:space-x-4">
     <EventList v-if="stryktipset" :event="stryktipset" title="Stryktipset" />
     <EventList v-if="europatipset" :event="europatipset" title="Europatipset" />
   </div>
