@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import { Home, LogOut, Medal, Settings, Users } from 'lucide-vue-next'
+import { Home, LogOut, Medal, Users, User } from 'lucide-vue-next'
 import {
   Sidebar,
   SidebarContent,
@@ -29,9 +29,9 @@ const menuItems = [
     icon: Medal,
   },
   {
-    title: 'Profil',
+    title: 'Mitt konto',
     url: '/profile',
-    icon: Settings,
+    icon: User,
   },
 ]
 
@@ -61,13 +61,21 @@ const actionItems = [
 </script>
 
 <template>
-  <Sidebar class="sticky top-0 h-screen w-24">
-    <SidebarContent class="gap-2">
-      <SidebarGroup>
+  <Sidebar
+    collapsible="none"
+    class="bg-background fixed bottom-0 left-0 z-50 h-20 w-full border-t lg:sticky lg:top-0 lg:h-screen lg:w-24 lg:border-t-0 lg:border-r"
+  >
+    <SidebarContent class="h-full lg:h-auto lg:gap-2">
+      <SidebarGroup class="h-full justify-center lg:h-auto lg:justify-start">
         <SidebarGroupContent>
-          <SidebarMenu>
+          <SidebarMenu
+            class="flex flex-row justify-around lg:flex-col lg:justify-start"
+          >
             <SidebarMenuItem v-for="item in menuItems" :key="item.title">
-              <SidebarMenuButton as-child class="h-auto flex-col gap-1 py-3">
+              <SidebarMenuButton
+                as-child
+                class="h-auto flex-col gap-1 py-2 lg:py-3"
+              >
                 <NuxtLink :to="item.url" :title="item.title">
                   <component :is="item.icon" class="size-5!" />
                   <span class="text-xs">{{ item.title }}</span>
@@ -77,11 +85,16 @@ const actionItems = [
           </SidebarMenu>
         </SidebarGroupContent>
       </SidebarGroup>
-      <SidebarGroup class="mt-auto">
+      <SidebarGroup class="hidden lg:mt-auto lg:block">
         <SidebarGroupContent>
-          <SidebarMenu>
+          <SidebarMenu
+            class="flex flex-row justify-around lg:flex-col lg:justify-start"
+          >
             <SidebarMenuItem v-for="item in actionItems" :key="item.title">
-              <SidebarMenuButton as-child class="h-auto flex-col gap-1 py-3">
+              <SidebarMenuButton
+                as-child
+                class="h-auto flex-col gap-1 py-2 lg:py-3"
+              >
                 <button
                   @click="item.action"
                   :title="item.title"
