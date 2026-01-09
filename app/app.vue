@@ -16,7 +16,7 @@ const { loggedIn, user } = useUserSession()
       <SidebarNav />
     </template>
     <SidebarInset class="from-sidebar to-background bg-radial">
-      <NuxtLayout>
+      <NuxtLayout class="mb-20 lg:mb-0">
         <Toaster />
         <NuxtPage />
       </NuxtLayout>
