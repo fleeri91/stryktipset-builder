@@ -1,13 +1,13 @@
 export interface ResultRoot {
   result: Result
-  error: any
+  error: string | null
   requestInfo: RequestInfo
   requestId: string
-  sessionId: any
+  sessionId: string | null
   deviceId: string
-  session: any
-  sessionUser: any
-  clientInfo: any
+  session: string | null
+  sessionUser: string | null
+  clientInfo: string | null
 }
 
 export interface Result {

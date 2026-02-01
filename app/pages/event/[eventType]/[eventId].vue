@@ -1,13 +1,13 @@
 <script setup lang="ts">
-definePageMeta({
-  layout: 'centered',
-})
-
 import {
   useEventDraw,
   useEventBong,
   useEventBongSubmit,
 } from '~/pages/event/composables'
+
+definePageMeta({
+  layout: 'centered',
+})
 
 const route = useRoute()
 const drawNumber = route.params.eventId as string

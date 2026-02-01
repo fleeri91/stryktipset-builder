@@ -56,9 +56,9 @@ function onConfidenceUpdate(value: ConfidenceLevel) {
         type="multiple"
         variant="outline"
         :model-value="modelValue"
-        @update:model-value="onUpdate"
         class="flex"
         size="sm"
+        @update:model-value="onUpdate"
       >
         <ToggleGroupItem value="1" aria-label="Hemmavinst">1</ToggleGroupItem>
         <ToggleGroupItem value="X" aria-label="Oavgjort">X</ToggleGroupItem>

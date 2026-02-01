@@ -7,10 +7,6 @@ declare module '#auth-utils' {
     email: string
     name: string
   }
-
-  interface UserSession {
-    // Add any additional session properties here if needed
-  }
 }
 
 export {}

@@ -13,7 +13,7 @@ const emit = defineEmits<{
 </script>
 
 <template>
-  <Form @submit="emit('submit')" class="space-y-4">
+  <Form class="space-y-4" @submit="emit('submit')">
     <h2 class="text-xl font-semibold">Namn</h2>
     <FormField name="name">
       <FormItem>
@@ -21,8 +21,8 @@ const emit = defineEmits<{
         <FormControl>
           <Input
             :model-value="name"
-            @update:model-value="emit('update:name', $event.toString())"
             :disabled="isUpdating"
+            @update:model-value="emit('update:name', $event.toString())"
           />
         </FormControl>
         <FormMessage />

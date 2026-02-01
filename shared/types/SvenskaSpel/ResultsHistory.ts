@@ -4,19 +4,19 @@ export interface ResultsHistoryRoot {
   year: number
   month: number
   resultDates: ResultDate[]
-  error: any
+  error: string | null
   requestInfo: RequestInfo
   requestId: string
-  sessionId: any
+  sessionId: string | null
   deviceId: string
-  session: any
-  sessionUser: any
-  clientInfo: any
+  session: string | null
+  sessionUser: string | null
+  clientInfo: string | null
 }
 
 export interface ResultDate {
   date: string
-  openDate: any
+  openDate: string | null
   closeDate: string
   product: string
   drawNumber: number
