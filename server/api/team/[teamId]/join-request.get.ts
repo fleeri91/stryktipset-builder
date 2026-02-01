@@ -1,13 +1,4 @@
-interface PopulatedJoinRequest {
-  _id: { toString(): string }
-  userId: {
-    _id: { toString(): string }
-    name: string
-    email: string
-  }
-  requestedAt: Date
-  status: 'pending' | 'accepted' | 'rejected'
-}
+import type { PopulatedJoinRequest } from '~~/shared/types/team'
 
 interface TeamWithPopulatedJoinRequests {
   _id: unknown
@@ -39,7 +30,6 @@ export default defineEventHandler(async (event) => {
       })
     }
 
-    // Only owner can view join requests
     if (team.owner.toString() !== userId) {
       throw createError({
         statusCode: 403,

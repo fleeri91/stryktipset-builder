@@ -1,18 +1,17 @@
 <script setup lang="ts">
 import type { EventRoot } from '~~/shared/types/SvenskaSpel/Event'
 import { EventType } from '~~/shared/types/SvenskaSpel/EventType'
+import type { TeamListItem } from '~~/shared/types/team'
 
 definePageMeta({
   layout: 'centered',
 })
 
-// Check if user has teams
 const { data: myTeams } =
   await useDelayedFetch<TeamListItem[]>('/api/user/teams')
 const hasTeams = computed(() => myTeams.value && myTeams.value.length > 0)
 
 const { data, pending, error } = await useAsyncData('events', async () => {
-  // Only fetch events if user has teams
   if (!hasTeams.value) {
     return null
   }

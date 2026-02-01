@@ -1,31 +1,8 @@
-import type { TeamDrawBong } from '~~/shared/types/team'
-
-interface TeamDocument {
-  _id: unknown
-  owner: { toString(): string }
-  members: Array<{
-    userId: { toString(): string }
-  }>
-}
-
-interface PopulatedDrawBong {
-  _id: { toString(): string }
-  userId: {
-    _id: { toString(): string }
-    name: string
-    email: string
-  }
-  drawNumber: number
-  drawComment: string
-  closeTime: Date
-  predictions: Array<{
-    eventNumber: number
-    outcome: string[]
-    confidence: string
-    description: string
-  }>
-  createdAt: Date
-}
+import type {
+  TeamDrawBong,
+  TeamDocument,
+  TeamPopulatedDrawBong,
+} from '~~/shared/types/team'
 
 export default defineEventHandler(async (event): Promise<TeamDrawBong[]> => {
   const session = await requireUserSession(event)
@@ -78,7 +55,7 @@ export default defineEventHandler(async (event): Promise<TeamDrawBong[]> => {
     })
       .populate('userId', 'name email')
       .sort({ createdAt: -1 })
-      .lean<PopulatedDrawBong[]>()
+      .lean<TeamPopulatedDrawBong[]>()
 
     if (bongs.length === 0) {
       return []

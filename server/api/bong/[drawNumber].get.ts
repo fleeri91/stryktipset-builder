@@ -1,4 +1,3 @@
-// server/api/bong/[drawNumber].get.ts
 import { EventBong } from '~~/server/models/event-bong.model'
 import type { BongRoot } from '~~/shared/types/bong/Bong'
 
@@ -23,7 +22,6 @@ export default defineEventHandler(async (event) => {
       })
     }
 
-    // Find the user's bong for this draw
     const bong = await EventBong.findOne({
       userId,
       drawNumber: Number(drawNumber),

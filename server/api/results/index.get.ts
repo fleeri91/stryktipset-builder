@@ -34,7 +34,6 @@ export default defineEventHandler(
           `?product=${type}&year=${year}&month=${month}`
       )
 
-      // ✅ Sort by closeDate (newest first)
       data.resultDates.sort(
         (a, b) =>
           new Date(b.closeDate).getTime() - new Date(a.closeDate).getTime()

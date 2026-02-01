@@ -1,16 +1,4 @@
-// Type for the team document with join requests
-interface TeamWithJoinRequests {
-  _id: unknown
-  members: Array<{
-    userId: { toString(): string }
-  }>
-  joinRequests?: Array<{
-    userId: { toString(): string }
-    requestedAt: Date
-    status: 'pending' | 'accepted' | 'rejected'
-  }>
-  save(): Promise<void>
-}
+import type { TeamWithJoinRequestsMutable } from '~~/shared/types/team'
 
 export default defineEventHandler(async (event) => {
   const session = await requireUserSession(event)
@@ -25,7 +13,9 @@ export default defineEventHandler(async (event) => {
   }
 
   try {
-    const team = (await Team.findById(teamId)) as TeamWithJoinRequests | null
+    const team = (await Team.findById(
+      teamId
+    )) as TeamWithJoinRequestsMutable | null
 
     if (!team) {
       throw createError({
@@ -34,9 +24,9 @@ export default defineEventHandler(async (event) => {
       })
     }
 
-    // Check if user is already a member
     const isMember = team.members.some(
-      (member) => member.userId.toString() === userId
+      (member) =>
+        (member.userId as { toString(): string }).toString() === userId
     )
 
     if (isMember) {
@@ -46,9 +36,10 @@ export default defineEventHandler(async (event) => {
       })
     }
 
-    // Check if user already has a pending request
     const hasPendingRequest = team.joinRequests?.some(
-      (req) => req.userId.toString() === userId && req.status === 'pending'
+      (req) =>
+        (req.userId as { toString(): string }).toString() === userId &&
+        req.status === 'pending'
     )
 
     if (hasPendingRequest) {
@@ -58,7 +49,6 @@ export default defineEventHandler(async (event) => {
       })
     }
 
-    // Add join request
     team.joinRequests = team.joinRequests || []
     team.joinRequests.push({
       userId,

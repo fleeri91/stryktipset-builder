@@ -2,7 +2,6 @@ export default defineEventHandler(async (event) => {
   try {
     const body = await readBody(event)
 
-    // Validate required fields
     if (!body?.email || !body?.name) {
       throw createError({
         statusCode: 400,
@@ -10,13 +9,11 @@ export default defineEventHandler(async (event) => {
       })
     }
 
-    // Create the user
     const user = await User.create({
       email: body.email,
       name: body.name,
     })
 
-    // Return the created user
     return user
   } catch (error: unknown) {
     const message =

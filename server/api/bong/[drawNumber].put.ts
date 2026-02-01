@@ -22,7 +22,6 @@ export default defineEventHandler(async (event) => {
       })
     }
 
-    // Validate predictions
     if (
       !body.predictions ||
       !Array.isArray(body.predictions) ||
@@ -34,7 +33,6 @@ export default defineEventHandler(async (event) => {
       })
     }
 
-    // Find and update the user's bong for this draw
     const bong = await EventBong.findOneAndUpdate(
       {
         userId,
@@ -46,8 +44,8 @@ export default defineEventHandler(async (event) => {
         closeTime: body.closeTime,
       },
       {
-        new: true, // Return the updated document
-        runValidators: true, // Run schema validators
+        new: true,
+        runValidators: true,
       }
     )
 

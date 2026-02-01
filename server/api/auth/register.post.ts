@@ -15,7 +15,6 @@ export default defineEventHandler(async (event) => {
       bodySchema.parse
     )
 
-    // Check if user already exists
     const existingUser = await User.findOne({ email: email.toLowerCase() })
     if (existingUser) {
       throw createError({
@@ -24,17 +23,14 @@ export default defineEventHandler(async (event) => {
       })
     }
 
-    // Hash password
     const hashedPassword = await hashPassword(password)
 
-    // Create user
     const user = await User.create({
       email: email.toLowerCase(),
       name,
       password: hashedPassword,
     })
 
-    // Set session
     await setUserSession(event, {
       user: {
         id: user._id.toString(),

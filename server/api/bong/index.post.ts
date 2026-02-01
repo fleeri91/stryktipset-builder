@@ -42,7 +42,6 @@ export default defineEventHandler(async (event) => {
     const validOutcomes = ['1', 'X', '2']
 
     for (const pred of body.predictions) {
-      // Check outcome: can be string or array of strings
       if (Array.isArray(pred.outcome)) {
         for (const o of pred.outcome) {
           if (!validOutcomes.includes(o)) {
@@ -59,7 +58,6 @@ export default defineEventHandler(async (event) => {
         })
       }
 
-      // Confidence check remains the same
       if (!['UNSURE', 'NEUTRAL', 'SAFE'].includes(pred.confidence)) {
         throw createError({
           statusCode: 400,

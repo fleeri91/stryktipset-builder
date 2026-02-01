@@ -1,25 +1,8 @@
-import type { TeamBong } from '~~/shared/types/team'
-
-interface TeamDocument {
-  _id: unknown
-  owner: { toString(): string }
-  members: Array<{
-    userId: { toString(): string }
-  }>
-}
-
-interface PopulatedBongDocument {
-  _id: { toString(): string }
-  userId: {
-    _id: { toString(): string }
-    name: string
-  }
-  drawNumber: number
-  drawComment: string
-  closeTime: Date
-  predictions: unknown[]
-  createdAt: Date
-}
+import type {
+  TeamBong,
+  TeamDocument,
+  TeamPopulatedBongDocument,
+} from '~~/shared/types/team'
 
 export default defineEventHandler(async (event): Promise<TeamBong[]> => {
   const session = await requireUserSession(event)
@@ -62,8 +45,8 @@ export default defineEventHandler(async (event): Promise<TeamBong[]> => {
     })
       .populate('userId', 'name')
       .sort({ createdAt: -1 })
-      .limit(50) // Limit to 50 most recent
-      .lean<PopulatedBongDocument[]>()
+      .limit(50)
+      .lean<TeamPopulatedBongDocument[]>()
 
     return bongs.map((bong) => ({
       _id: bong._id.toString(),
