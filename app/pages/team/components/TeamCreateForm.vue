@@ -1,8 +1,9 @@
 <script setup lang="ts">
 import { toTypedSchema } from '@vee-validate/zod'
+import { Loader2 } from 'lucide-vue-next'
 import { useForm } from 'vee-validate'
 import * as z from 'zod'
-import { Loader2 } from 'lucide-vue-next'
+
 import type { TeamRoot } from '~~/shared/types/team'
 
 const formSchema = toTypedSchema(

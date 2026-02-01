@@ -1,5 +1,6 @@
 <script setup lang="ts">
 import { Info } from 'lucide-vue-next'
+
 import { useTeamPage } from '~/pages/team/composables/useTeamPage'
 
 const route = useRoute()

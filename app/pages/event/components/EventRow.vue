@@ -1,8 +1,9 @@
 <script setup lang="ts">
-import { computed } from 'vue'
 import type { AcceptableValue } from 'reka-ui'
-import type { Event } from '~~/shared/types/SvenskaSpel/Event'
+import { computed } from 'vue'
+
 import type { Outcome, ConfidenceLevel } from '~/pages/event/types'
+import type { Event } from '~~/shared/types/SvenskaSpel/Event'
 
 const props = withDefaults(
   defineProps<{

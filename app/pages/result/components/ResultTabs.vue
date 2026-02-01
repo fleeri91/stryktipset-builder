@@ -1,6 +1,6 @@
 <script setup lang="ts">
-import type { ResultsHistoryRoot } from '~~/shared/types/SvenskaSpel/ResultsHistory'
 import { EventType } from '~~/shared/types/SvenskaSpel/EventType'
+import type { ResultsHistoryRoot } from '~~/shared/types/SvenskaSpel/ResultsHistory'
 
 interface Props {
   data?: ResultsHistoryRoot | null

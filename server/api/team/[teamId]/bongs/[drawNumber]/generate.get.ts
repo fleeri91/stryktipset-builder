@@ -1,5 +1,5 @@
-import type { GeneratedBong } from '~~/server/utils/bong/types'
 import { generateTeamBong } from '~~/server/services/teamBong/generateService'
+import type { GeneratedBong } from '~~/server/utils/bong/types'
 
 interface TeamDocument {
   _id: unknown

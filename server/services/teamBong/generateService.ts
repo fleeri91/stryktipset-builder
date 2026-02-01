@@ -1,12 +1,12 @@
+import {
+  calculateEventVotes,
+  groupPredictionsByEvent,
+} from '~~/server/utils/bong/calculators'
 import type {
   GeneratedBong,
   TeamMemberPrediction,
   GeneratedPrediction,
 } from '~~/server/utils/bong/types'
-import {
-  calculateEventVotes,
-  groupPredictionsByEvent,
-} from '~~/server/utils/bong/calculators'
 import type { TeamLean } from '~~/shared/types/team'
 
 type ConfidenceLevel = 'SAFE' | 'NEUTRAL' | 'UNSURE'

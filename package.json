@@ -38,6 +38,7 @@
   "devDependencies": {
     "@tailwindcss/vite": "^4.1.18",
     "@types/bcrypt": "^6.0.0",
+    "eslint-plugin-import": "^2.32.0",
     "prettier": "^3.7.4",
     "prettier-plugin-tailwindcss": "^0.7.2",
     "tailwindcss": "^4.1.18",

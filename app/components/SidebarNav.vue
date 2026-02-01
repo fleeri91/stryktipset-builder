@@ -1,5 +1,6 @@
 <script setup lang="ts">
 import { Home, LogOut, Medal, Users, User } from 'lucide-vue-next'
+
 import {
   Sidebar,
   SidebarContent,

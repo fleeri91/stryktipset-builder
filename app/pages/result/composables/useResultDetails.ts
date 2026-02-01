@@ -1,5 +1,5 @@
-import type { Result } from '~~/shared/types/SvenskaSpel/Result'
 import type { EventType } from '~~/shared/types/SvenskaSpel/EventType'
+import type { Result } from '~~/shared/types/SvenskaSpel/Result'
 
 export function useResultDetails(
   type: Ref<EventType>,
