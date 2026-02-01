@@ -16,7 +16,7 @@ export async function generateTeamBong(
   drawNumber: number
 ): Promise<GeneratedBong> {
   // Fetch all team bongs for this draw
-  const team: any = await Team.findById(teamId).lean()
+  const team = await Team.findById(teamId).lean<TeamLean>()
 
   if (!team) {
     throw new Error('Team not found')

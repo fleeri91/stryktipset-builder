@@ -37,9 +37,9 @@ async function requestToJoin() {
 <template>
   <Button
     v-if="!requested"
-    @click="requestToJoin"
     :disabled="isRequesting"
     class="w-full"
+    @click="requestToJoin"
   >
     {{ isRequesting ? 'Skickar...' : 'Ansök om medlemskap' }}
   </Button>

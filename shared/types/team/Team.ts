@@ -12,6 +12,15 @@ export interface TeamRoot {
   hasPendingRequest?: boolean
 }
 
+export interface TeamLean {
+  _id: string
+  members: {
+    userId: {
+      toString(): string
+    }
+  }[]
+}
+
 export interface Owner {
   _id: string
   name: string

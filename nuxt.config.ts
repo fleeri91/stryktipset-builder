@@ -24,6 +24,7 @@ export default defineNuxtConfig({
     'nuxt-auth-utils',
     '@nuxtjs/color-mode',
     '@nuxt/image',
+    '@nuxt/eslint',
   ],
   mongoose: {
     uri: process.env.MONGODB_URI,

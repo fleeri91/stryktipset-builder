@@ -8,10 +8,10 @@
         </CardDescription>
       </CardHeader>
       <CardContent class="space-y-3">
-        <Button asChild class="w-full">
+        <Button as-child class="w-full">
           <NuxtLink to="/team/create">Skapa nytt lag</NuxtLink>
         </Button>
-        <Button asChild variant="outline" class="w-full">
+        <Button as-child variant="outline" class="w-full">
           <NuxtLink to="/team">Utforska lag</NuxtLink>
         </Button>
       </CardContent>

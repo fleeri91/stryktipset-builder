@@ -17,7 +17,7 @@ withDefaults(
 <template>
   <!-- Loading -->
   <div v-if="teams === null" class="grid gap-4 md:grid-cols-2">
-    <Card class="min-h-34 cursor-default" v-for="i in skeletonCount" :key="i">
+    <Card v-for="i in skeletonCount" :key="i" class="min-h-34 cursor-default">
       <CardHeader>
         <Skeleton class="h-6 w-3/4" />
         <Skeleton class="mt-1.5 h-4 w-1/2" />

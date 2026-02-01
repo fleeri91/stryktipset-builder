@@ -19,7 +19,7 @@ const hasMyTeams = computed(() => myTeams.value && myTeams.value.length > 0)
 <template>
   <div class="flex justify-between">
     <PageHeader title="Lag" />
-    <Button variant="outline" asChild>
+    <Button variant="outline" as-child>
       <NuxtLink to="/team/create">Skapa</NuxtLink>
     </Button>
   </div>

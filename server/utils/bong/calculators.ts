@@ -33,11 +33,7 @@ export function calculateEventVotes(
 
   // Determine confidence based on vote concentration
   const totalVotes = votes['1'] + votes['X'] + votes['2']
-  const confidence = calculateConfidence(
-    maxVotes,
-    totalVotes,
-    predictions.length
-  )
+  const confidence = calculateConfidence(maxVotes, totalVotes)
 
   return {
     eventNumber: predictions[0].eventNumber,
@@ -54,13 +50,11 @@ export function calculateEventVotes(
  */
 function calculateConfidence(
   maxVotes: number,
-  totalVotes: number,
-  teamSize: number
+  totalVotes: number
 ): 'SAFE' | 'NEUTRAL' | 'UNSURE' {
   if (totalVotes === 0) return 'UNSURE'
 
   const concentration = maxVotes / totalVotes
-  const participation = teamSize // Could track actual participation
 
   // High concentration (>70%) and good participation = SAFE
   if (concentration >= 0.7) {

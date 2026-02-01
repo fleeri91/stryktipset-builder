@@ -1,6 +1,6 @@
 import { reactive, ref, watch, computed } from 'vue'
 import type { Outcome, ConfidenceLevel } from '~/pages/event/types'
-import type { BongRoot } from '~~/shared/types/Bong'
+import type { BongRoot } from '~~/shared/types/bong/Bong'
 
 export const useEventBong = (drawNumber: string) => {
   const selections = reactive<Record<number, Outcome[]>>({})

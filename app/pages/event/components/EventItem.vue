@@ -52,8 +52,8 @@ function updateConfidence(value: ConfidenceLevel) {
   <EventRow
     :event="event"
     :model-value="selections"
-    @update:model-value="updateSelections"
     :confidence="confidence"
+    @update:model-value="updateSelections"
     @update:confidence="updateConfidence"
   />
 </template>
