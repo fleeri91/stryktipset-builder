@@ -11,7 +11,7 @@ export default defineEventHandler(async (event) => {
       })
     }
 
-    const userId = (session.user as any).id
+    const userId = session.user.id
     const drawNumber = getRouterParam(event, 'drawNumber')
     const body = await readBody(event)
 
@@ -61,25 +61,37 @@ export default defineEventHandler(async (event) => {
     return {
       bong,
     }
-  } catch (err: any) {
-    // Handle validation errors
-    if (err.name === 'ValidationError') {
+  } catch (error: unknown) {
+    if (
+      typeof error === 'object' &&
+      error !== null &&
+      'name' in error &&
+      error.name === 'ValidationError' &&
+      'message' in error &&
+      typeof error.message === 'string'
+    ) {
       return sendError(
         event,
         createError({
           statusCode: 400,
-          statusMessage: err.message,
+          statusMessage: error.message,
         })
       )
     }
 
-    if (err.statusCode) {
-      return sendError(event, err)
-    }
-
     return sendError(
       event,
-      createError({ statusCode: 500, statusMessage: err.message })
+      createError({
+        statusCode:
+          typeof error === 'object' &&
+          error !== null &&
+          'statusCode' in error &&
+          typeof error.statusCode === 'number'
+            ? error.statusCode
+            : 500,
+        statusMessage:
+          error instanceof Error ? error.message : 'Internal Server Error',
+      })
     )
   }
 })

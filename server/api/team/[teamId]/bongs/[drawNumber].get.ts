@@ -1,4 +1,31 @@
-import type { TeamDrawBong } from '~~/shared/types/Team'
+import type { TeamDrawBong } from '~~/shared/types/team'
+
+interface TeamDocument {
+  _id: unknown
+  owner: { toString(): string }
+  members: Array<{
+    userId: { toString(): string }
+  }>
+}
+
+interface PopulatedDrawBong {
+  _id: { toString(): string }
+  userId: {
+    _id: { toString(): string }
+    name: string
+    email: string
+  }
+  drawNumber: number
+  drawComment: string
+  closeTime: Date
+  predictions: Array<{
+    eventNumber: number
+    outcome: string[]
+    confidence: string
+    description: string
+  }>
+  createdAt: Date
+}
 
 export default defineEventHandler(async (event): Promise<TeamDrawBong[]> => {
   const session = await requireUserSession(event)
@@ -22,8 +49,7 @@ export default defineEventHandler(async (event): Promise<TeamDrawBong[]> => {
   }
 
   try {
-    // Check if user is a member of the team
-    const team: any = await Team.findById(teamId).lean()
+    const team = await Team.findById(teamId).lean<TeamDocument>()
 
     if (!team) {
       throw createError({
@@ -34,7 +60,7 @@ export default defineEventHandler(async (event): Promise<TeamDrawBong[]> => {
 
     const isOwner = team.owner.toString() === userId
     const isMember = team.members.some(
-      (member: any) => member.userId.toString() === userId
+      (member) => member.userId.toString() === userId
     )
 
     if (!isOwner && !isMember) {
@@ -44,24 +70,21 @@ export default defineEventHandler(async (event): Promise<TeamDrawBong[]> => {
       })
     }
 
-    // Get all member IDs
-    const memberIds = team.members.map((m: any) => m.userId.toString())
+    const memberIds = team.members.map((m) => m.userId.toString())
 
-    // Fetch bongs for this specific draw from all team members
-    const bongs: any = await EventBong.find({
+    const bongs = await EventBong.find({
       userId: { $in: memberIds },
       drawNumber: drawNumberInt,
     })
       .populate('userId', 'name email')
       .sort({ createdAt: -1 })
-      .lean()
+      .lean<PopulatedDrawBong[]>()
 
     if (bongs.length === 0) {
       return []
     }
 
-    // Transform to detailed structure with predictions
-    return bongs.map((bong: any) => ({
+    return bongs.map((bong) => ({
       _id: bong._id.toString(),
       user: {
         _id: bong.userId._id.toString(),
@@ -71,7 +94,7 @@ export default defineEventHandler(async (event): Promise<TeamDrawBong[]> => {
       drawNumber: bong.drawNumber,
       drawComment: bong.drawComment,
       closeTime: bong.closeTime.toISOString(),
-      predictions: bong.predictions.map((pred: any) => ({
+      predictions: bong.predictions.map((pred) => ({
         eventNumber: pred.eventNumber,
         outcome: pred.outcome,
         confidence: pred.confidence,
@@ -79,8 +102,8 @@ export default defineEventHandler(async (event): Promise<TeamDrawBong[]> => {
       })),
       createdAt: bong.createdAt.toISOString(),
     }))
-  } catch (error: any) {
-    if (error.statusCode) {
+  } catch (error) {
+    if (error && typeof error === 'object' && 'statusCode' in error) {
       throw error
     }
 

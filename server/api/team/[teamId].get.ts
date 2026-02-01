@@ -1,5 +1,37 @@
-import type { TeamRoot } from '~~/shared/types/Team'
+import type { TeamRoot } from '~~/shared/types/team'
 import { Types } from 'mongoose'
+
+interface TeamCheckDocument {
+  _id: unknown
+  owner: { toString(): string }
+  members: Array<{
+    userId: { toString(): string }
+  }>
+}
+
+interface PopulatedTeamDocument {
+  _id: { toString(): string }
+  name: string
+  owner: {
+    _id: { toString(): string }
+    name: string
+    email: string
+  }
+  members: Array<{
+    userId: {
+      _id: { toString(): string }
+      name: string
+      email: string
+    }
+    joinedAt: Date
+  }>
+  joinRequests?: Array<{
+    userId: { toString(): string }
+    status: 'pending' | 'accepted' | 'rejected'
+  }>
+  createdAt: Date
+  updatedAt: Date
+}
 
 export default defineEventHandler(async (event): Promise<TeamRoot> => {
   const session = await requireUserSession(event)
@@ -20,8 +52,7 @@ export default defineEventHandler(async (event): Promise<TeamRoot> => {
   }
 
   try {
-    // First fetch: check existence + permissions
-    const teamCheck: any = await Team.findById(teamId).lean()
+    const teamCheck = await Team.findById(teamId).lean<TeamCheckDocument>()
 
     if (!teamCheck) {
       throw createError({
@@ -33,21 +64,26 @@ export default defineEventHandler(async (event): Promise<TeamRoot> => {
     const userId = session.user.id.toString()
     const isOwner = teamCheck.owner.toString() === userId
     const isMember = teamCheck.members.some(
-      (member: any) => member.userId.toString() === userId
+      (member) => member.userId.toString() === userId
     )
 
-    // Second fetch: populate conditionally
     let query = Team.findById(teamId).populate('owner', 'name email')
 
     if (isOwner || isMember) {
       query = query.populate('members.userId', 'name email')
     }
 
-    const team: any = await query.lean()
+    const team = await query.lean<PopulatedTeamDocument>()
 
-    // Pending join request check
+    if (!team) {
+      throw createError({
+        statusCode: 404,
+        message: 'Laget hittades inte',
+      })
+    }
+
     const hasPendingRequest = team.joinRequests?.some(
-      (req: any) => req.userId.toString() === userId && req.status === 'pending'
+      (req) => req.userId.toString() === userId && req.status === 'pending'
     )
 
     return {
@@ -60,7 +96,7 @@ export default defineEventHandler(async (event): Promise<TeamRoot> => {
       },
       members:
         isOwner || isMember
-          ? team.members.map((member: any) => ({
+          ? team.members.map((member) => ({
               _id: member.userId._id.toString(),
               name: member.userId.name,
               email: member.userId.email,
@@ -74,8 +110,8 @@ export default defineEventHandler(async (event): Promise<TeamRoot> => {
       isMember,
       hasPendingRequest,
     }
-  } catch (error: any) {
-    if (error.statusCode) {
+  } catch (error) {
+    if (error && typeof error === 'object' && 'statusCode' in error) {
       throw error
     }
 

@@ -1,3 +1,17 @@
+// Type for the team document with join requests
+interface TeamWithJoinRequests {
+  _id: unknown
+  members: Array<{
+    userId: { toString(): string }
+  }>
+  joinRequests?: Array<{
+    userId: { toString(): string }
+    requestedAt: Date
+    status: 'pending' | 'accepted' | 'rejected'
+  }>
+  save(): Promise<void>
+}
+
 export default defineEventHandler(async (event) => {
   const session = await requireUserSession(event)
   const teamId = getRouterParam(event, 'teamId')
@@ -11,7 +25,7 @@ export default defineEventHandler(async (event) => {
   }
 
   try {
-    const team: any = await Team.findById(teamId)
+    const team = (await Team.findById(teamId)) as TeamWithJoinRequests | null
 
     if (!team) {
       throw createError({
@@ -22,7 +36,7 @@ export default defineEventHandler(async (event) => {
 
     // Check if user is already a member
     const isMember = team.members.some(
-      (member: any) => member.userId.toString() === userId
+      (member) => member.userId.toString() === userId
     )
 
     if (isMember) {
@@ -34,7 +48,7 @@ export default defineEventHandler(async (event) => {
 
     // Check if user already has a pending request
     const hasPendingRequest = team.joinRequests?.some(
-      (req: any) => req.userId.toString() === userId && req.status === 'pending'
+      (req) => req.userId.toString() === userId && req.status === 'pending'
     )
 
     if (hasPendingRequest) {
@@ -57,8 +71,8 @@ export default defineEventHandler(async (event) => {
     return {
       message: 'Förfrågan skickad',
     }
-  } catch (error: any) {
-    if (error.statusCode) {
+  } catch (error) {
+    if (error && typeof error === 'object' && 'statusCode' in error) {
       throw error
     }
 

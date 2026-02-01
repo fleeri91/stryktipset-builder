@@ -1,11 +1,18 @@
-export interface TeamDraw {
+import type { TeamDraw } from '~~/shared/types/team'
+
+interface TeamDocument {
+  _id: unknown
+  owner: { toString(): string }
+  members: Array<{
+    userId: { toString(): string }
+  }>
+}
+
+interface BongDocument {
   drawNumber: number
   drawComment: string
-  closeTime: string
-  productName: string
-  participatingMembers: number
-  totalMembers: number
-  canGenerate: boolean
+  closeTime: Date
+  userId: { toString(): string }
 }
 
 export default defineEventHandler(async (event): Promise<TeamDraw[]> => {
@@ -21,8 +28,7 @@ export default defineEventHandler(async (event): Promise<TeamDraw[]> => {
   }
 
   try {
-    // Check if user is a member of the team
-    const team: any = await Team.findById(teamId).lean()
+    const team = await Team.findById(teamId).lean<TeamDocument>()
 
     if (!team) {
       throw createError({
@@ -33,7 +39,7 @@ export default defineEventHandler(async (event): Promise<TeamDraw[]> => {
 
     const isOwner = team.owner.toString() === userId
     const isMember = team.members.some(
-      (member: any) => member.userId.toString() === userId
+      (member) => member.userId.toString() === userId
     )
 
     if (!isOwner && !isMember) {
@@ -43,19 +49,16 @@ export default defineEventHandler(async (event): Promise<TeamDraw[]> => {
       })
     }
 
-    // Get all member IDs
-    const memberIds = team.members.map((m: any) => m.userId.toString())
+    const memberIds = team.members.map((m) => m.userId.toString())
     const totalMembers = memberIds.length
 
-    // Get all bongs from team members and group by draw
-    const bongs: any = await EventBong.find({
+    const bongs = await EventBong.find({
       userId: { $in: memberIds },
     })
       .select('drawNumber drawComment closeTime userId')
       .sort({ closeTime: -1 })
-      .lean()
+      .lean<BongDocument[]>()
 
-    // Group by draw number and count unique participants
     const drawMap = new Map<
       number,
       {
@@ -65,7 +68,7 @@ export default defineEventHandler(async (event): Promise<TeamDraw[]> => {
       }
     >()
 
-    bongs.forEach((bong: any) => {
+    bongs.forEach((bong) => {
       if (!drawMap.has(bong.drawNumber)) {
         drawMap.set(bong.drawNumber, {
           drawComment: bong.drawComment,
@@ -76,7 +79,6 @@ export default defineEventHandler(async (event): Promise<TeamDraw[]> => {
       drawMap.get(bong.drawNumber)!.participants.add(bong.userId.toString())
     })
 
-    // Convert to array and add metadata
     const draws: TeamDraw[] = Array.from(drawMap.entries()).map(
       ([drawNumber, data]) => ({
         drawNumber,
@@ -87,19 +89,18 @@ export default defineEventHandler(async (event): Promise<TeamDraw[]> => {
           : 'Stryktipset',
         participatingMembers: data.participants.size,
         totalMembers,
-        canGenerate: data.participants.size >= 2, // Need at least 2 members to generate
+        canGenerate: data.participants.size >= 2,
       })
     )
 
-    // Sort by close time (newest first)
     draws.sort(
       (a, b) =>
         new Date(b.closeTime).getTime() - new Date(a.closeTime).getTime()
     )
 
     return draws
-  } catch (error: any) {
-    if (error.statusCode) {
+  } catch (error) {
+    if (error && typeof error === 'object' && 'statusCode' in error) {
       throw error
     }
 

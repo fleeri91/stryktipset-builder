@@ -1,5 +1,5 @@
 import { z } from 'zod'
-import { User } from '../../models/user.model'
+import { User } from '~~/server/models/user.model'
 
 const bodySchema = z.object({
   email: z.string().email(),
@@ -48,12 +48,10 @@ export default defineEventHandler(async (event) => {
         name: user.name,
       },
     }
-  } catch (err: any) {
-    if (err.statusCode) {
-      throw err
+  } catch (error: unknown) {
+    if (typeof error === 'object' && error !== null && 'statusCode' in error) {
+      throw error
     }
-
-    console.error('Login error:', err)
     throw createError({
       statusCode: 500,
       statusMessage: 'Ett fel uppstod vid inloggning',

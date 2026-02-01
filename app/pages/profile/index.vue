@@ -9,13 +9,15 @@ const { state, isUpdatingName, updateName } = useUserProfile()
 </script>
 
 <template>
-  <PageHeader title="Profil" />
-  <PageSection>
-    <ProfileSettings
-      :name="state.name"
-      :is-updating="isUpdatingName"
-      @update:name="state.name = $event"
-      @submit="updateName"
-    />
-  </PageSection>
+  <div>
+    <PageHeader title="Profil" />
+    <PageSection>
+      <ProfileSettings
+        :name="state.name"
+        :is-updating="isUpdatingName"
+        @update:name="state.name = $event"
+        @submit="updateName"
+      />
+    </PageSection>
+  </div>
 </template>

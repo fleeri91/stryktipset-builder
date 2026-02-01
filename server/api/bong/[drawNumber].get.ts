@@ -13,7 +13,7 @@ export default defineEventHandler(async (event) => {
       })
     }
 
-    const userId = (session.user as any).id
+    const userId = session.user.id
     const drawNumber = getRouterParam(event, 'drawNumber')
 
     if (!drawNumber) {
@@ -32,14 +32,34 @@ export default defineEventHandler(async (event) => {
     return {
       bong: bong as BongRoot | null,
     }
-  } catch (err: any) {
-    if (err.statusCode) {
-      return sendError(event, err)
+  } catch (error: unknown) {
+    if (
+      typeof error === 'object' &&
+      error !== null &&
+      'statusCode' in error &&
+      typeof error.statusCode === 'number'
+    ) {
+      const statusMessage =
+        'message' in error && typeof error.message === 'string'
+          ? error.message
+          : 'Internal Server Error'
+
+      return sendError(
+        event,
+        createError({
+          statusCode: error.statusCode,
+          statusMessage,
+        })
+      )
     }
 
     return sendError(
       event,
-      createError({ statusCode: 500, statusMessage: err.message })
+      createError({
+        statusCode: 500,
+        statusMessage:
+          error instanceof Error ? error.message : 'Internal Server Error',
+      })
     )
   }
 })

@@ -8,7 +8,7 @@ export default defineEventHandler(async (event) => {
         statusMessage: 'Unauthorized',
       })
     }
-    const userId = (session.user as any).id
+    const userId = session.user.id
 
     if (!userId) {
       throw createError({
@@ -77,8 +77,13 @@ export default defineEventHandler(async (event) => {
     })
 
     return bong
-  } catch (err: any) {
-    if (err.code === 11000) {
+  } catch (error: unknown) {
+    if (
+      typeof error === 'object' &&
+      error !== null &&
+      'code' in error &&
+      (error as { code: number }).code === 11000
+    ) {
       return sendError(
         event,
         createError({
@@ -88,23 +93,36 @@ export default defineEventHandler(async (event) => {
       )
     }
 
-    if (err.name === 'ValidationError') {
+    if (
+      typeof error === 'object' &&
+      error !== null &&
+      'name' in error &&
+      (error as { name: string }).name === 'ValidationError' &&
+      'message' in error &&
+      typeof (error as { message: unknown }).message === 'string'
+    ) {
       return sendError(
         event,
         createError({
           statusCode: 400,
-          statusMessage: err.message,
+          statusMessage: (error as { message: string }).message,
         })
       )
     }
 
-    if (err.statusCode) {
-      return sendError(event, err)
-    }
-
     return sendError(
       event,
-      createError({ statusCode: 500, statusMessage: err.message })
+      createError({
+        statusCode:
+          typeof error === 'object' &&
+          error !== null &&
+          'statusCode' in error &&
+          typeof (error as { statusCode: unknown }).statusCode === 'number'
+            ? (error as { statusCode: number }).statusCode
+            : 500,
+        statusMessage:
+          error instanceof Error ? error.message : 'Internal Server Error',
+      })
     )
   }
 })

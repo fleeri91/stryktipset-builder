@@ -17,8 +17,10 @@ const events = computed(() => data.value?.events ?? [])
 </script>
 
 <template>
-  <PageHeader title="Resultat" />
-  <PageSection>
-    <ResultBong :events="events" :pending="pending" :error="error" />
-  </PageSection>
+  <div>
+    <PageHeader title="Resultat" />
+    <PageSection>
+      <ResultBong :events="events" :pending="pending" :error="error" />
+    </PageSection>
+  </div>
 </template>

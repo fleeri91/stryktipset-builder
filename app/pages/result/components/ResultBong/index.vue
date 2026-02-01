@@ -1,7 +1,7 @@
 <script setup lang="ts">
 import type { Event } from '~~/shared/types/SvenskaSpel/Result'
 
-const props = defineProps<{
+defineProps<{
   events: Event[]
   pending?: boolean
   error?: unknown

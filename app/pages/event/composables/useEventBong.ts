@@ -7,7 +7,6 @@ export const useEventBong = (drawNumber: string) => {
   const confidenceLevels = reactive<Record<number, ConfidenceLevel>>({})
   const existingBongId = ref<string | null>(null)
 
-  // Fetch existing bong if it exists
   const { data: bongData } = useAsyncData(
     `bong-${drawNumber}`,
     async () => {
@@ -16,14 +15,13 @@ export const useEventBong = (drawNumber: string) => {
           `/api/bong/${drawNumber}`
         )
         return result
-      } catch (err) {
+      } catch {
         return { bong: null }
       }
     },
     { server: false }
   )
 
-  // Pre-populate form when bong data is loaded
   watch(
     () => bongData.value?.bong,
     (bong) => {
@@ -31,13 +29,15 @@ export const useEventBong = (drawNumber: string) => {
         existingBongId.value =
           typeof bong._id === 'string'
             ? bong._id
-            : (bong._id as any)?.$oid || (bong._id as any)?.toString()
+            : bong._id?.$oid || bong._id?.toString()
 
-        // Clear existing selections
-        Object.keys(selections).forEach((key) => delete selections[Number(key)])
-        Object.keys(confidenceLevels).forEach(
-          (key) => delete confidenceLevels[Number(key)]
-        )
+        Object.keys(selections).forEach((key) => {
+          selections[Number(key)] = undefined as unknown as Outcome[]
+        })
+        Object.keys(confidenceLevels).forEach((key) => {
+          confidenceLevels[Number(key)] =
+            undefined as unknown as ConfidenceLevel
+        })
 
         bong.predictions.forEach((pred) => {
           selections[pred.eventNumber] = Array.isArray(pred.outcome)

@@ -24,10 +24,23 @@ async function requestToJoin() {
     toast.success('Förfrågan skickad!', {
       description: 'Lagägaren kommer att granska din förfrågan',
     })
-  } catch (err: any) {
-    toast.error('Kunde inte skicka förfrågan', {
-      description: err.data?.message || 'Något gick fel',
-    })
+  } catch (error: unknown) {
+    if (typeof error === 'object' && error !== null && 'statusCode' in error) {
+      throw error
+    }
+
+    const description =
+      typeof error === 'object' &&
+      error !== null &&
+      'data' in error &&
+      typeof error.data === 'object' &&
+      error.data !== null &&
+      'message' in error.data &&
+      typeof error.data.message === 'string'
+        ? error.data.message
+        : 'Något gick fel'
+
+    toast.error('Kunde inte skicka förfrågan', { description })
   } finally {
     isRequesting.value = false
   }

@@ -10,7 +10,7 @@ export const useDelayedFetch = <T>(
 
   return useFetch<T>(url, {
     ...fetchOptions,
-    async onRequest(ctx) {
+    async onRequest() {
       await new Promise((resolve) => setTimeout(resolve, delay))
     },
   })

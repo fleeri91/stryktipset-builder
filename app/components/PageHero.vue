@@ -7,10 +7,11 @@ interface Props {
   overlayOpacity?: number
 }
 
-const props = withDefaults(defineProps<Props>(), {
+withDefaults(defineProps<Props>(), {
   alt: '',
   overlay: true,
   overlayOpacity: 0.4,
+  height: undefined,
 })
 </script>
 

@@ -12,13 +12,15 @@ const type = ref<EventType>(EventType.Stryktipset)
 const year = ref(now.getFullYear())
 const month = ref(now.getMonth() + 1)
 
-const { data, pending, error } = useResultsData(type, year, month)
+const { data, pending } = useResultsData(type, year, month)
 </script>
 
 <template>
-  <PageHeader title="Resultat" />
+  <div>
+    <PageHeader title="Resultat" />
 
-  <PageSection>
-    <ResultTabs v-model="type" :data="data" :pending="pending" :error="error" />
-  </PageSection>
+    <PageSection>
+      <ResultTabs v-model="type" :data="data" :pending="pending" />
+    </PageSection>
+  </div>
 </template>

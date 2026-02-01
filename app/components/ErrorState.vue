@@ -8,7 +8,7 @@ import {
   EmptyTitle,
 } from '@/components/ui/empty'
 
-const props = defineProps<{
+defineProps<{
   title: string
   description: string
 }>()

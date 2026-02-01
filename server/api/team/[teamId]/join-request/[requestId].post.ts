@@ -1,10 +1,25 @@
+interface TeamWithJoinRequests {
+  _id: unknown
+  owner: { toString(): string }
+  members: Array<{
+    userId: unknown
+    joinedAt: Date
+  }>
+  joinRequests?: Array<{
+    _id: { toString(): string }
+    userId: unknown
+    status: 'pending' | 'accepted' | 'rejected'
+  }>
+  save(): Promise<void>
+}
+
 export default defineEventHandler(async (event) => {
   const session = await requireUserSession(event)
   const teamId = getRouterParam(event, 'teamId')
   const requestId = getRouterParam(event, 'requestId')
   const userId = session.user.id.toString()
 
-  const { action } = await readBody(event) // 'accept' or 'reject'
+  const { action } = await readBody(event)
 
   if (!teamId || !requestId) {
     throw createError({
@@ -21,7 +36,7 @@ export default defineEventHandler(async (event) => {
   }
 
   try {
-    const team: any = await Team.findById(teamId)
+    const team = (await Team.findById(teamId)) as TeamWithJoinRequests | null
 
     if (!team) {
       throw createError({
@@ -30,7 +45,6 @@ export default defineEventHandler(async (event) => {
       })
     }
 
-    // Only owner can accept/reject requests
     if (team.owner.toString() !== userId) {
       throw createError({
         statusCode: 403,
@@ -39,7 +53,7 @@ export default defineEventHandler(async (event) => {
     }
 
     const request = team.joinRequests?.find(
-      (req: any) => req._id.toString() === requestId
+      (req) => req._id.toString() === requestId
     )
 
     if (!request) {
@@ -73,8 +87,8 @@ export default defineEventHandler(async (event) => {
       message:
         action === 'accept' ? 'Användare tillagd i laget' : 'Förfrågan avvisad',
     }
-  } catch (error: any) {
-    if (error.statusCode) {
+  } catch (error) {
+    if (error && typeof error === 'object' && 'statusCode' in error) {
       throw error
     }
 

@@ -1,3 +1,20 @@
+interface PopulatedJoinRequest {
+  _id: { toString(): string }
+  userId: {
+    _id: { toString(): string }
+    name: string
+    email: string
+  }
+  requestedAt: Date
+  status: 'pending' | 'accepted' | 'rejected'
+}
+
+interface TeamWithPopulatedJoinRequests {
+  _id: unknown
+  owner: { toString(): string }
+  joinRequests?: PopulatedJoinRequest[]
+}
+
 export default defineEventHandler(async (event) => {
   const session = await requireUserSession(event)
   const teamId = getRouterParam(event, 'teamId')
@@ -11,9 +28,9 @@ export default defineEventHandler(async (event) => {
   }
 
   try {
-    const team: any = await Team.findById(teamId)
+    const team = await Team.findById(teamId)
       .populate('joinRequests.userId', 'name email')
-      .lean()
+      .lean<TeamWithPopulatedJoinRequests>()
 
     if (!team) {
       throw createError({
@@ -32,8 +49,8 @@ export default defineEventHandler(async (event) => {
 
     const pendingRequests =
       team.joinRequests
-        ?.filter((req: any) => req.status === 'pending')
-        .map((req: any) => ({
+        ?.filter((req) => req.status === 'pending')
+        .map((req) => ({
           _id: req._id.toString(),
           user: {
             _id: req.userId._id.toString(),
@@ -44,8 +61,8 @@ export default defineEventHandler(async (event) => {
         })) || []
 
     return pendingRequests
-  } catch (error: any) {
-    if (error.statusCode) {
+  } catch (error) {
+    if (error && typeof error === 'object' && 'statusCode' in error) {
       throw error
     }
 

@@ -37,9 +37,8 @@ export const useUserProfile = () => {
       await fetchUser()
 
       toast.success('Namn uppdaterat')
-    } catch (err: any) {
+    } catch {
       toast.error('Kunde inte uppdatera namn')
-      console.error(err)
     } finally {
       isUpdatingName.value = false
     }
