@@ -1,6 +1,6 @@
 <script setup lang="ts">
-import type { Event } from '~~/shared/types/SvenskaSpel/Event'
 import type { Outcome, ConfidenceLevel } from '~/pages/event/types'
+import type { Event } from '~~/shared/types/SvenskaSpel/Event'
 
 interface Props {
   events: Event[]

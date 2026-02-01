@@ -1,7 +1,8 @@
 <script setup lang="ts">
 import { ref } from 'vue'
-import type { JoinRequest } from '~~/shared/types/team'
 import { toast } from 'vue-sonner'
+
+import type { JoinRequest } from '~~/shared/types/team'
 
 interface Props {
   teamId: string

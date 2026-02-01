@@ -1,5 +1,6 @@
-import type { TeamRoot } from '~~/shared/types/team'
 import { Types } from 'mongoose'
+
+import type { TeamRoot } from '~~/shared/types/team'
 
 interface TeamCheckDocument {
   _id: unknown

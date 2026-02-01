@@ -1,5 +1,5 @@
-import type { Owner } from './Owner'
 import type { Member } from './Member'
+import type { Owner } from './Owner'
 
 export interface TeamRoot {
   _id: string

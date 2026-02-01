@@ -1,5 +1,6 @@
-import type { TeamRoot } from '~~/shared/types/Team'
 import { useTeamDraws } from './useTeamDraws'
+
+import type { TeamRoot } from '~~/shared/types/Team'
 
 export const useTeamPage = (teamId: string) => {
   const {

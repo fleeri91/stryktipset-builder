@@ -1,6 +1,6 @@
 <script setup lang="ts">
-import type { Event } from '~~/shared/types/SvenskaSpel/Result'
 import { ToggleGroup, ToggleGroupItem } from '@/components/ui/toggle-group'
+import type { Event } from '~~/shared/types/SvenskaSpel/Result'
 
 const props = defineProps<{
   event: Event

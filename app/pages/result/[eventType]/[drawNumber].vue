@@ -1,6 +1,6 @@
 <script setup lang="ts">
-import type { EventType } from '~~/shared/types/SvenskaSpel/EventType'
 import { useResultDetails } from '~/pages/result/composables'
+import type { EventType } from '~~/shared/types/SvenskaSpel/EventType'
 
 definePageMeta({
   layout: 'centered',

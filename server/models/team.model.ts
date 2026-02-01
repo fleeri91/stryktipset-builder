@@ -1,5 +1,6 @@
-import { defineMongooseModel } from '#nuxt/mongoose'
 import { Schema } from 'mongoose'
+
+import { defineMongooseModel } from '#nuxt/mongoose'
 
 export const Team = defineMongooseModel({
   name: 'Team',

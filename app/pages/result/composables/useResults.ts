@@ -1,8 +1,8 @@
+import type { EventType } from '~~/shared/types/SvenskaSpel/EventType'
 import type {
   ResultsHistoryRoot,
   ResultDate,
 } from '~~/shared/types/SvenskaSpel/ResultsHistory'
-import type { EventType } from '~~/shared/types/SvenskaSpel/EventType'
 import { DrawState } from '~~/shared/types/SvenskaSpel/ResultsHistory'
 
 export function useResultsData(

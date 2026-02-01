@@ -1,4 +1,5 @@
 import { z } from 'zod'
+
 import { User } from '~~/server/models/user.model'
 
 const bodySchema = z.object({

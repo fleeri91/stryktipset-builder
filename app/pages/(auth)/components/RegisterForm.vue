@@ -1,7 +1,10 @@
 <script setup lang="ts">
 import { toTypedSchema } from '@vee-validate/zod'
+import { Loader2 } from 'lucide-vue-next'
 import { useForm } from 'vee-validate'
 import * as z from 'zod'
+
+import { Alert, AlertDescription } from '@/components/ui/alert'
 import {
   Card,
   CardContent,
@@ -19,8 +22,6 @@ import {
   FormMessage,
 } from '@/components/ui/form'
 import { Input } from '@/components/ui/input'
-import { Alert, AlertDescription } from '@/components/ui/alert'
-import { Loader2 } from 'lucide-vue-next'
 
 const { loggedIn } = useUserSession()
 
