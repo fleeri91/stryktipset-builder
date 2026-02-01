@@ -1,6 +1,6 @@
 import type { EventRoot } from '~~/shared/types/SvenskaSpel/Event'
 import { EventType } from '~~/shared/types/SvenskaSpel/EventType'
-import type { TeamListItem } from '~~/shared/types/Team'
+import type { TeamListItem } from '~~/shared/types/team'
 
 export const useEvent = (type: EventType) => {
   return useDelayedFetch<EventRoot>('/api/event', {
@@ -27,7 +27,6 @@ export const useAllEvents = () => {
   })
 }
 
-// This returns the composables for the page to await
 export const useEventsWithTeamCheck = () => {
   const myTeamsResult = useDelayedFetch<TeamListItem[]>('/api/user/teams')
 

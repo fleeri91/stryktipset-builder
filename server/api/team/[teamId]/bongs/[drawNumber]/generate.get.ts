@@ -1,13 +1,6 @@
 import { generateTeamBong } from '~~/server/services/teamBong/generateService'
 import type { GeneratedBong } from '~~/server/utils/bong/types'
-
-interface TeamDocument {
-  _id: unknown
-  owner: { toString(): string }
-  members: Array<{
-    userId: { toString(): string }
-  }>
-}
+import type { TeamDocument } from '~~/shared/types/team'
 
 export default defineEventHandler(async (event): Promise<GeneratedBong> => {
   const session = await requireUserSession(event)

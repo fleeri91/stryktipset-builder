@@ -32,8 +32,6 @@ export const useUserProfile = () => {
         method: 'PUT',
         body: { name: state.name },
       })
-
-      // Refresh the user session to get updated data
       await fetchUser()
 
       toast.success('Namn uppdaterat')

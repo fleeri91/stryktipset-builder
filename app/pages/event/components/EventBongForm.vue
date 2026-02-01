@@ -21,7 +21,6 @@ const emit = defineEmits<{
   (e: 'submit'): void
 }>()
 
-// Helper functions to properly emit the events
 function handleSelectionsUpdate(eventNumber: number, value: Outcome[]) {
   emit('update:selections', eventNumber, value)
 }

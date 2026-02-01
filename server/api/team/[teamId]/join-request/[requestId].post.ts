@@ -1,17 +1,4 @@
-interface TeamWithJoinRequests {
-  _id: unknown
-  owner: { toString(): string }
-  members: Array<{
-    userId: unknown
-    joinedAt: Date
-  }>
-  joinRequests?: Array<{
-    _id: { toString(): string }
-    userId: unknown
-    status: 'pending' | 'accepted' | 'rejected'
-  }>
-  save(): Promise<void>
-}
+import type { TeamWithJoinRequests } from '~~/shared/types/team'
 
 export default defineEventHandler(async (event) => {
   const session = await requireUserSession(event)
@@ -71,7 +58,6 @@ export default defineEventHandler(async (event) => {
     }
 
     if (action === 'accept') {
-      // Add user to members
       team.members.push({
         userId: request.userId,
         joinedAt: new Date(),

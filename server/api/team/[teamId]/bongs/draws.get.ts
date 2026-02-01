@@ -1,19 +1,8 @@
-import type { TeamDraw } from '~~/shared/types/team'
-
-interface TeamDocument {
-  _id: unknown
-  owner: { toString(): string }
-  members: Array<{
-    userId: { toString(): string }
-  }>
-}
-
-interface BongDocument {
-  drawNumber: number
-  drawComment: string
-  closeTime: Date
-  userId: { toString(): string }
-}
+import type {
+  TeamDraw,
+  TeamDocument,
+  TeamBongDocument,
+} from '~~/shared/types/team'
 
 export default defineEventHandler(async (event): Promise<TeamDraw[]> => {
   const session = await requireUserSession(event)
@@ -57,7 +46,7 @@ export default defineEventHandler(async (event): Promise<TeamDraw[]> => {
     })
       .select('drawNumber drawComment closeTime userId')
       .sort({ closeTime: -1 })
-      .lean<BongDocument[]>()
+      .lean<TeamBongDocument[]>()
 
     const drawMap = new Map<
       number,

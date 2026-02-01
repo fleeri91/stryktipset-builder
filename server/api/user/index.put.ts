@@ -55,7 +55,6 @@ export default defineEventHandler(async (event) => {
     updateData.password = await hashPassword(body.newPassword)
 
   try {
-    // Update user in DB
     const updatedUser = await User.findOneAndUpdate(
       { _id: user.id },
       updateData,
@@ -69,7 +68,6 @@ export default defineEventHandler(async (event) => {
       })
     }
 
-    // **Update the session with the new user data**
     await setUserSession(event, {
       user: {
         id: updatedUser._id.toString(),

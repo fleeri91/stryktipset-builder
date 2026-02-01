@@ -15,11 +15,9 @@ const emit = defineEmits<{
   (e: 'update:confidence', eventNumber: number, value: ConfidenceLevel): void
 }>()
 
-// Initialize with props or defaults
 const selections = ref<Outcome[]>(props.initialSelections || [])
 const confidence = ref<ConfidenceLevel>(props.initialConfidence || 'NEUTRAL')
 
-// Watch for changes to initial values (when bong data loads)
 watch(
   () => props.initialSelections,
   (newVal) => {
