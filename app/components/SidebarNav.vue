@@ -96,10 +96,10 @@ const actionItems = [
                 class="h-auto flex-col gap-1 py-2 lg:py-3"
               >
                 <button
-                  @click="item.action"
                   :title="item.title"
                   :disabled="isLoggingOut"
                   class="disabled:opacity-50"
+                  @click="item.action"
                 >
                   <component :is="item.icon" class="size-5!" />
                   <span class="text-xs">

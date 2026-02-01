@@ -65,16 +65,16 @@ async function handleRequest(requestId: string, action: 'accept' | 'reject') {
         <div class="flex gap-2">
           <Button
             size="sm"
-            @click="handleRequest(request._id, 'accept')"
             :disabled="processing === request._id"
+            @click="handleRequest(request._id, 'accept')"
           >
             Godkänn
           </Button>
           <Button
             size="sm"
             variant="outline"
-            @click="handleRequest(request._id, 'reject')"
             :disabled="processing === request._id"
+            @click="handleRequest(request._id, 'reject')"
           >
             Avvisa
           </Button>

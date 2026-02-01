@@ -1,9 +1,9 @@
 <script setup lang="ts">
+import { useUserProfile } from '~/pages/profile/composables'
+
 definePageMeta({
   layout: 'narrow',
 })
-
-import { useUserProfile } from '~/pages/profile/composables'
 
 const { state, isUpdatingName, updateName } = useUserProfile()
 </script>

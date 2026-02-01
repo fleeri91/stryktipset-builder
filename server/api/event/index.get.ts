@@ -1,4 +1,4 @@
-import { EventRoot } from '~~/shared/types/SvenskaSpel/Event'
+import type { EventRoot } from '~~/shared/types/SvenskaSpel/Event'
 import { EventType } from '~~/shared/types/SvenskaSpel/EventType'
 
 export default defineEventHandler(async (event): Promise<EventRoot> => {

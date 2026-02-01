@@ -1,6 +1,6 @@
 // server/api/bong/[drawNumber].get.ts
 import { EventBong } from '~~/server/models/event-bong.model'
-import type { BongRoot } from '~~/shared/types/Bong'
+import type { BongRoot } from '~~/shared/types/bong/Bong'
 
 export default defineEventHandler(async (event) => {
   try {

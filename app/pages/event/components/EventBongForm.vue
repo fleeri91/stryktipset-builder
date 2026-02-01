@@ -65,10 +65,10 @@ function handleConfidenceUpdate(eventNumber: number, value: ConfidenceLevel) {
     <!-- Submit button -->
     <div class="mt-4 flex justify-center">
       <Button
-        @click="emit('submit')"
         :disabled="!isValidBong || isSubmitting"
         class="w-full"
         size="lg"
+        @click="emit('submit')"
       >
         {{
           isSubmitting

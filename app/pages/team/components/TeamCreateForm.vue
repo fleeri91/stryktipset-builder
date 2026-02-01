@@ -60,7 +60,7 @@ const onSubmit = form.handleSubmit(async (values) => {
       </CardHeader>
 
       <CardContent>
-        <form @submit="onSubmit" class="space-y-4">
+        <form class="space-y-4" @submit="onSubmit">
           <Alert v-if="error" variant="destructive">
             <AlertDescription>{{ error }}</AlertDescription>
           </Alert>
