@@ -37,8 +37,13 @@ export default defineEventHandler(async (event) => {
     })
 
     return team
-  } catch (err: any) {
-    if (err.code === 11000) {
+  } catch (err: unknown) {
+    if (
+      typeof err === 'object' &&
+      err !== null &&
+      'code' in err &&
+      (err as { code: number }).code === 11000
+    ) {
       throw createError({
         statusCode: 400,
         message: 'Du har redan ett lag med detta namn',

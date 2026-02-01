@@ -1,4 +1,9 @@
 import { User } from '~~/server/models/user.model'
+import type {
+  UserWithPassword,
+  UserDocument,
+  UserUpdateData,
+} from '~~/shared/types/user'
 
 export default defineEventHandler(async (event) => {
   const { user } = await requireUserSession(event)
@@ -19,9 +24,19 @@ export default defineEventHandler(async (event) => {
       })
     }
 
-    const currentUser = await User.findById(user.id).select('+password')
+    const currentUser = await User.findById(user.id)
+      .select('+password')
+      .lean<UserWithPassword>()
+
+    if (!currentUser) {
+      throw createError({
+        statusCode: 404,
+        statusMessage: 'User not found',
+      })
+    }
+
     const isValid = await verifyPassword(
-      (currentUser as any).password,
+      currentUser.password,
       body.currentPassword
     )
 
@@ -33,7 +48,7 @@ export default defineEventHandler(async (event) => {
     }
   }
 
-  const updateData: any = {}
+  const updateData: UserUpdateData = {}
   if (body.name) updateData.name = body.name.trim()
   if (body.email) updateData.email = body.email.toLowerCase().trim()
   if (body.newPassword)
@@ -45,7 +60,7 @@ export default defineEventHandler(async (event) => {
       { _id: user.id },
       updateData,
       { new: true }
-    )
+    ).lean<UserDocument>()
 
     if (!updatedUser) {
       throw createError({

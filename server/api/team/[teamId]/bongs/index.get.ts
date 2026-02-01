@@ -1,4 +1,25 @@
-import type { TeamBong } from '~~/shared/types/Team'
+import type { TeamBong } from '~~/shared/types/team'
+
+interface TeamDocument {
+  _id: unknown
+  owner: { toString(): string }
+  members: Array<{
+    userId: { toString(): string }
+  }>
+}
+
+interface PopulatedBongDocument {
+  _id: { toString(): string }
+  userId: {
+    _id: { toString(): string }
+    name: string
+  }
+  drawNumber: number
+  drawComment: string
+  closeTime: Date
+  predictions: unknown[]
+  createdAt: Date
+}
 
 export default defineEventHandler(async (event): Promise<TeamBong[]> => {
   const session = await requireUserSession(event)
@@ -13,8 +34,7 @@ export default defineEventHandler(async (event): Promise<TeamBong[]> => {
   }
 
   try {
-    // Check if user is a member of the team
-    const team: any = await Team.findById(teamId).lean()
+    const team = await Team.findById(teamId).lean<TeamDocument>()
 
     if (!team) {
       throw createError({
@@ -25,7 +45,7 @@ export default defineEventHandler(async (event): Promise<TeamBong[]> => {
 
     const isOwner = team.owner.toString() === userId
     const isMember = team.members.some(
-      (member: any) => member.userId.toString() === userId
+      (member) => member.userId.toString() === userId
     )
 
     if (!isOwner && !isMember) {
@@ -35,20 +55,17 @@ export default defineEventHandler(async (event): Promise<TeamBong[]> => {
       })
     }
 
-    // Get all member IDs
-    const memberIds = team.members.map((m: any) => m.userId.toString())
+    const memberIds = team.members.map((m) => m.userId.toString())
 
-    // Fetch recent bongs from all team members
-    const bongs: any = await EventBong.find({
+    const bongs = await EventBong.find({
       userId: { $in: memberIds },
     })
       .populate('userId', 'name')
       .sort({ createdAt: -1 })
       .limit(50) // Limit to 50 most recent
-      .lean()
+      .lean<PopulatedBongDocument[]>()
 
-    // Transform to simpler structure
-    return bongs.map((bong: any) => ({
+    return bongs.map((bong) => ({
       _id: bong._id.toString(),
       userId: bong.userId._id.toString(),
       userName: bong.userId.name,
@@ -58,8 +75,8 @@ export default defineEventHandler(async (event): Promise<TeamBong[]> => {
       predictionsCount: bong.predictions.length,
       createdAt: bong.createdAt.toISOString(),
     }))
-  } catch (error: any) {
-    if (error.statusCode) {
+  } catch (error) {
+    if (error && typeof error === 'object' && 'statusCode' in error) {
       throw error
     }
 

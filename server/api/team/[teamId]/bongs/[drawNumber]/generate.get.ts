@@ -1,6 +1,14 @@
 import type { GeneratedBong } from '~~/server/utils/bong/types'
 import { generateTeamBong } from '~~/server/services/teamBong/generateService'
 
+interface TeamDocument {
+  _id: unknown
+  owner: { toString(): string }
+  members: Array<{
+    userId: { toString(): string }
+  }>
+}
+
 export default defineEventHandler(async (event): Promise<GeneratedBong> => {
   const session = await requireUserSession(event)
   const teamId = getRouterParam(event, 'teamId')
@@ -23,8 +31,7 @@ export default defineEventHandler(async (event): Promise<GeneratedBong> => {
   }
 
   try {
-    // Check if user is a member of the team
-    const team: any = await Team.findById(teamId).lean()
+    const team = await Team.findById(teamId).lean<TeamDocument>()
 
     if (!team) {
       throw createError({
@@ -35,7 +42,7 @@ export default defineEventHandler(async (event): Promise<GeneratedBong> => {
 
     const isOwner = team.owner.toString() === userId
     const isMember = team.members.some(
-      (member: any) => member.userId.toString() === userId
+      (member) => member.userId.toString() === userId
     )
 
     if (!isOwner && !isMember) {
@@ -45,28 +52,28 @@ export default defineEventHandler(async (event): Promise<GeneratedBong> => {
       })
     }
 
-    // Generate the team bong
     const generatedBong = await generateTeamBong(teamId, drawNumberInt)
 
     return generatedBong
-  } catch (error: any) {
-    if (error.statusCode) {
+  } catch (error) {
+    if (error && typeof error === 'object' && 'statusCode' in error) {
       throw error
     }
 
-    // Handle specific service errors
-    if (error.message === 'Team not found') {
-      throw createError({
-        statusCode: 404,
-        message: 'Laget hittades inte',
-      })
-    }
+    if (error instanceof Error) {
+      if (error.message === 'Team not found') {
+        throw createError({
+          statusCode: 404,
+          message: 'Laget hittades inte',
+        })
+      }
 
-    if (error.message === 'No bongs found for this draw') {
-      throw createError({
-        statusCode: 404,
-        message: 'Inga bongs hittades för denna omgång',
-      })
+      if (error.message === 'No bongs found for this draw') {
+        throw createError({
+          statusCode: 404,
+          message: 'Inga bongs hittades för denna omgång',
+        })
+      }
     }
 
     throw createError({

@@ -5,7 +5,6 @@ import { EventType } from '~~/shared/types/SvenskaSpel/EventType'
 interface Props {
   data?: ResultsHistoryRoot | null
   pending?: boolean
-  error?: any
 }
 
 defineProps<Props>()
@@ -27,10 +26,6 @@ const type = defineModel<EventType>({ required: true })
       <div class="mt-4">
         <div v-if="pending">
           <ResultHistoryLoading :count="4" />
-        </div>
-
-        <div v-else-if="error">
-          <ErrorState title="Något gick fel" description="Försök igen" />
         </div>
 
         <div v-else-if="data?.resultDates.length">

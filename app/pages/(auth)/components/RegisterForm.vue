@@ -24,7 +24,6 @@ import { Loader2 } from 'lucide-vue-next'
 
 const { loggedIn } = useUserSession()
 
-// Omdirigera om redan inloggad
 watchEffect(() => {
   if (loggedIn.value) {
     navigateTo('/')
@@ -64,10 +63,10 @@ const form = useForm({
 })
 
 const isLoading = ref(false)
-const error = ref('')
+const errorMessage = ref('')
 
 const onSubmit = form.handleSubmit(async (values) => {
-  error.value = ''
+  errorMessage.value = ''
   isLoading.value = true
 
   try {
@@ -80,12 +79,21 @@ const onSubmit = form.handleSubmit(async (values) => {
       },
     })
 
-    // Reload the entire Nuxt app with the new session
     reloadNuxtApp({ path: '/' })
-  } catch (err: any) {
-    error.value =
-      err.data?.statusMessage ||
-      'Registreringen misslyckades. Vänligen försök igen.'
+  } catch (error: unknown) {
+    if (
+      typeof error === 'object' &&
+      error !== null &&
+      'data' in error &&
+      typeof error.data === 'object' &&
+      error.data !== null &&
+      'statusMessage' in error.data &&
+      typeof error.data.statusMessage === 'string'
+    ) {
+      errorMessage.value = error.data.statusMessage
+    } else {
+      errorMessage.value = 'Registreringen misslyckades. Vänligen försök igen.'
+    }
   } finally {
     isLoading.value = false
   }
@@ -106,8 +114,8 @@ const onSubmit = form.handleSubmit(async (values) => {
 
       <CardContent class="space-y-6">
         <form class="space-y-4" @submit="onSubmit">
-          <Alert v-if="error" variant="destructive">
-            <AlertDescription>{{ error }}</AlertDescription>
+          <Alert v-if="errorMessage" variant="destructive">
+            <AlertDescription>{{ errorMessage }}</AlertDescription>
           </Alert>
 
           <FormField v-slot="{ componentField }" name="name">

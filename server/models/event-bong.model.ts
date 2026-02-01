@@ -1,6 +1,10 @@
 import { defineMongooseModel } from '#nuxt/mongoose'
 import { Schema } from 'mongoose'
 
+interface PredictionValidation {
+  eventNumber: number
+}
+
 export const EventBong = defineMongooseModel({
   name: 'EventBong',
   schema: {
@@ -50,8 +54,7 @@ export const EventBong = defineMongooseModel({
       ],
       required: true,
       validate: {
-        validator: function (predictions: any[]) {
-          // Ensure all eventNumbers are unique
+        validator: function (predictions: PredictionValidation[]) {
           const eventNumbers = predictions.map((p) => p.eventNumber)
           return eventNumbers.length === new Set(eventNumbers).size
         },
@@ -63,10 +66,8 @@ export const EventBong = defineMongooseModel({
     timestamps: true,
   },
   hooks(schema) {
-    // Add indexes
     schema.index({ closeTime: 1 })
     schema.index({ userId: 1 })
-    // Compound unique index: one bong per user per draw
     schema.index({ userId: 1, drawNumber: 1 }, { unique: true })
   },
 })

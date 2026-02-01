@@ -1,7 +1,7 @@
 import { ref, computed } from 'vue'
 import { toast } from 'vue-sonner'
 import type { Outcome, ConfidenceLevel } from '~/pages/event/types'
-import type { Draw, Event  } from '~~/shared/types/SvenskaSpel/Event'
+import type { Draw, Event } from '~~/shared/types/SvenskaSpel/Event'
 import type { BongRoot } from '~~/shared/types/bong/Bong'
 
 export const useEventBongSubmit = (
@@ -72,23 +72,37 @@ export const useEventBongSubmit = (
         existingBongId.value =
           typeof response._id === 'string'
             ? response._id
-            : (response._id as any)?.$oid || (response._id as any)?.toString()
+            : response._id?.$oid || response._id?.toString()
 
         toast.success('Bong skapad!', {
           description: `Din bong för ${draw.value.drawComment} har sparats`,
         })
       }
-    } catch (err: any) {
-      console.error('❌ Error submitting bong:', err)
+    } catch (error: unknown) {
+      console.error('❌ Error submitting bong:', error)
 
       let errorMessage = 'Något gick fel när bong skulle sparas'
 
-      if (err.statusCode === 409) {
-        errorMessage = 'Du har redan skapat en bong för denna omgång'
-      } else if (err.statusCode === 400) {
-        errorMessage = err.statusMessage || 'Ogiltiga värden i bong'
-      } else if (err.statusCode === 404) {
-        errorMessage = 'Bong hittades inte'
+      if (
+        typeof error === 'object' &&
+        error !== null &&
+        'statusCode' in error &&
+        typeof error.statusCode === 'number'
+      ) {
+        if (error.statusCode === 409) {
+          errorMessage = 'Du har redan skapat en bong för denna omgång'
+        } else if (error.statusCode === 400) {
+          if (
+            'statusMessage' in error &&
+            typeof error.statusMessage === 'string'
+          ) {
+            errorMessage = error.statusMessage
+          } else {
+            errorMessage = 'Ogiltiga värden i bong'
+          }
+        } else if (error.statusCode === 404) {
+          errorMessage = 'Bong hittades inte'
+        }
       }
 
       toast.error(

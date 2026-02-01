@@ -18,10 +18,13 @@ export default defineEventHandler(async (event) => {
 
     // Return the created user
     return user
-  } catch (err: any) {
+  } catch (error: unknown) {
+    const message =
+      error instanceof Error ? error.message : 'Internal Server Error'
+
     return sendError(
       event,
-      createError({ statusCode: 500, statusMessage: err.message })
+      createError({ statusCode: 500, statusMessage: message })
     )
   }
 })

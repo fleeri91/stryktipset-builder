@@ -3,14 +3,12 @@ import { toTypedSchema } from '@vee-validate/zod'
 import { useForm } from 'vee-validate'
 import * as z from 'zod'
 import { Loader2 } from 'lucide-vue-next'
-import type { TeamRoot } from '~~/shared/types/Team'
+import type { TeamRoot } from '~~/shared/types/team'
 
 const formSchema = toTypedSchema(
   z.object({
     name: z
-      .string({
-        required_error: 'Lagnamn är obligatoriskt',
-      })
+      .string({ required_error: 'Lagnamn är obligatoriskt' })
       .min(2, 'Lagnamnet måste innehålla minst 2 tecken')
       .max(50, 'Lagnamnet får inte överstiga 50 tecken'),
   })
@@ -21,26 +19,43 @@ const form = useForm({
 })
 
 const isLoading = ref(false)
-const error = ref('')
+const errorMessage = ref('')
 
 const onSubmit = form.handleSubmit(async (values) => {
-  error.value = ''
+  errorMessage.value = ''
   isLoading.value = true
 
   try {
     const team = await $fetch<TeamRoot>('/api/team', {
       method: 'POST',
-      body: {
-        name: values.name,
-      },
+      body: { name: values.name },
     })
 
     navigateTo(`/team/${team._id}`)
-  } catch (err: any) {
-    error.value =
-      err.data?.message ||
-      err.data?.statusMessage ||
-      'Kunde inte skapa laget. Vänligen försök igen.'
+  } catch (error: unknown) {
+    if (
+      typeof error === 'object' &&
+      error !== null &&
+      'data' in error &&
+      typeof error.data === 'object' &&
+      error.data !== null &&
+      'message' in error.data &&
+      typeof error.data.message === 'string'
+    ) {
+      errorMessage.value = error.data.message
+    } else if (
+      typeof error === 'object' &&
+      error !== null &&
+      'data' in error &&
+      typeof error.data === 'object' &&
+      error.data !== null &&
+      'statusMessage' in error.data &&
+      typeof error.data.statusMessage === 'string'
+    ) {
+      errorMessage.value = error.data.statusMessage
+    } else {
+      errorMessage.value = 'Kunde inte skapa laget. Vänligen försök igen.'
+    }
   } finally {
     isLoading.value = false
   }
@@ -60,9 +75,9 @@ const onSubmit = form.handleSubmit(async (values) => {
       </CardHeader>
 
       <CardContent>
-        <form class="space-y-4" @submit="onSubmit">
-          <Alert v-if="error" variant="destructive">
-            <AlertDescription>{{ error }}</AlertDescription>
+        <form class="space-y-4" @submit.prevent="onSubmit">
+          <Alert v-if="errorMessage" variant="destructive">
+            <AlertDescription>{{ errorMessage }}</AlertDescription>
           </Alert>
 
           <FormField v-slot="{ componentField }" name="name">
