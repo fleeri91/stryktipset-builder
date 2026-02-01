@@ -1,40 +1,14 @@
+import type { MongoId, MongoDate } from '../mongo'
+import type { Prediction } from './Prediction'
+
 export interface BongRoot {
-  _id: Id
-  userId: UserId
+  _id: MongoId
+  userId: MongoId
   drawNumber: number
   drawComment: string
-  closeTime: CloseTime
+  closeTime: MongoDate
   predictions: Prediction[]
-  createdAt: CreatedAt
-  updatedAt: UpdatedAt
+  createdAt: MongoDate
+  updatedAt: MongoDate
   __v: number
-}
-
-export interface Id {
-  $oid: string
-}
-
-export interface UserId {
-  $oid: string
-}
-
-export interface CloseTime {
-  $date: string
-}
-
-export interface Prediction {
-  eventNumber: number
-  outcome: string
-  confidence: string
-  description: string
-  sportEventId: number
-  _id: Id
-}
-
-export interface CreatedAt {
-  $date: string
-}
-
-export interface UpdatedAt {
-  $date: string
 }
